@@ -53,11 +53,6 @@ export enum Point {
   RectangleRotated = "rectRot",
 }
 
-export interface ILineChartPatterns {
-  lineBorderDash: number[];
-  pointStyle: Point;
-}
-
 export enum Shapes {
   Square = "square",
   DiagonalRightLeft = "diagonalRightLeft",
@@ -68,7 +63,7 @@ export enum Shapes {
 }
 
 export interface IDraw {
-  shapeType: Shapes;
+  shape: Shapes;
   size: number;
 }
 

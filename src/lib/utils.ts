@@ -1,6 +1,8 @@
 import { SiteVariablesPrepared } from "@fluentui/react-northstar";
 import { ChartData, ChartDataSets } from "chart.js";
 import { IChartPatterns } from "../types";
+import { buildPattern } from "./patterns";
+import { LineChartDataSetHCStyle } from "./theme";
 
 export const PI = Math.PI;
 export const HALF_PI = PI / 2;
@@ -79,6 +81,13 @@ export const usNumberFormat = (value: number | string): string =>
     .reverse()
     .join("");
 
+export function isHCThemeApplied(chart: any): boolean {
+  return (
+    typeof chart.data.datasets[0].backgroundColor !== "string" ||
+    chart.data.datasets[0].borderDash
+  );
+}
+
 export function tooltipTrigger({
   chart,
   data,
@@ -96,53 +105,58 @@ export function tooltipTrigger({
     const duplicates: number[] = [];
     const segments: any[] = [];
     // Check for equal data points
+    const fakeSet = isHCThemeApplied(chart)
+      ? new LineChartDataSetHCStyle({} as any)
+      : undefined;
     data!.datasets!.filter((dataset: ChartDataSets, i: number) => {
       if (dataset!.data![index] === data!.datasets![set].data![index]) {
         duplicates.push(i);
       }
-      // if (theme === ChartTheme.HighContrast) {
-      //   chart.data.datasets[i].borderColor = colorScheme.default.border;
-      //   chart.data.datasets[i].borderWidth = 2;
-      // }
+      if (fakeSet) {
+        chart.data.datasets[i].borderColor = fakeSet.borderColor;
+        chart.data.datasets[i].borderWidth = fakeSet.borderWidth;
+      }
     });
     duplicates.forEach((segmentId) => {
       segments.push(chart.getDatasetMeta(segmentId).data[index]);
-      // if (theme === ChartTheme.HighContrast) {
-      //   chart.data.datasets[segmentId].borderColor =
-      //     colorScheme.default.borderHover;
-      //   chart.data.datasets[segmentId].borderWidth = 4;
-      // }
+      if (fakeSet) {
+        chart.data.datasets[segmentId].borderColor = fakeSet.hoverBorderColor;
+        chart.data.datasets[segmentId].borderWidth = fakeSet.hoverBorderWidth;
+      }
     });
-    // if (theme === ChartTheme.HighContrast) {
-    //   chart.update();
-    // }
+    if (fakeSet) {
+      chart.update();
+    }
     chart.tooltip._active = segments;
   } else {
     const segment = chart.getDatasetMeta(set).data[index];
     chart.tooltip._active = [segment];
-    // if (theme === ChartTheme.HighContrast && patterns) {
-    //   chart.data.datasets.map((dataset: any, i: number) => {
-    //     dataset.borderColor = colorScheme.default.border;
-    //     dataset.borderWidth = 2;
-    //     dataset.backgroundColor = buildPattern({
-    //       ...patterns(colorScheme)[index],
-    //       backgroundColor: colorScheme.default.background,
-    //       patternColor: colorScheme.brand.background,
-    //     });
-    //   });
-    //   chart.data.datasets[set].borderColor =
-    //     siteVariables.colorScheme.default.borderHover;
-    //   chart.data.datasets[set].borderWidth = 4;
-    //   chart.data.datasets[set].backgroundColor = chart.data.datasets[
-    //     set
-    //   ].backgroundColor = buildPattern({
-    //     ...patterns(siteVariables.colorScheme)[set],
-    //     backgroundColor: colorScheme.default.background,
-    //     patternColor: colorScheme.default.borderHover,
-    //   });
-    //   chart.update();
-    // }
+    if (isHCThemeApplied(chart)) {
+      chart.data.datasets.map((dataset: any, i: number) => {
+        if (dataset.pattern) {
+          dataset.borderColor = "#fff";
+          dataset.borderWidth = 2;
+          dataset.backgroundColor = buildPattern({
+            backgroundColor: "#000",
+            patternColor: "#fff",
+            ...dataset.pattern,
+          });
+        }
+      });
+      chart.data.datasets[set].borderColor = "#1aebff";
+      chart.data.datasets[set].borderWidth = 4;
+      chart.data.datasets[set].backgroundColor = chart.data.datasets[
+        set
+      ].backgroundColor = buildPattern({
+        backgroundColor: "#000",
+        patternColor: "#1aebff",
+        ...chart.data.datasets[set].pattern,
+      });
+      chart.update();
+      console.log({ chart });
+    }
   }
+
   chart.tooltip.update();
   chart.draw();
 }

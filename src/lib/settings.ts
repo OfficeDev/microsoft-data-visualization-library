@@ -1,3 +1,4 @@
+import { ChartDataSets } from "chart.js";
 import { usNumberFormat, shortTicks } from "./utils";
 
 export const defaultChartOptions: Chart.ChartOptions = {
@@ -19,6 +20,10 @@ export const defaultChartOptions: Chart.ChartOptions = {
     line: {
       tension: 0.4,
     },
+  },
+  hover: {
+    mode: "dataset",
+    intersect: false,
   },
   tooltips: {
     yPadding: 12,
@@ -74,7 +79,6 @@ export const defaultChartOptions: Chart.ChartOptions = {
     ],
     yAxes: [
       {
-        stacked: false,
         ticks: {
           callback: shortTicks,
           fontSize: 10,
@@ -95,6 +99,29 @@ export const defaultChartOptions: Chart.ChartOptions = {
     ],
   },
 };
+
+// let dataPointConfig = {
+//   label: set.label,
+//   data: set.data,
+//   borderWidth: 1,
+//   borderColor: colorScheme.default.background,
+//   hoverBorderColor: chartDataPointColors[i],
+//   backgroundColor: chartDataPointColors[i],
+//   hoverBorderWidth: 2,
+//   hoverBackgroundColor: chartDataPointColors[i],
+//   pointBorderColor: colorScheme.default.background,
+//   pointBackgroundColor: colorScheme.default.foreground3,
+//   pointHoverBackgroundColor: colorScheme.default.foreground3,
+//   pointHoverBorderColor: chartDataPointColors[i],
+//   pointHoverBorderWidth: 2,
+//   borderCapStyle: "round",
+//   borderJoinStyle: "round",
+//   pointBorderWidth: 0,
+//   pointRadius: 0,
+//   pointHoverRadius: 3,
+//   pointStyle: "circle",
+//   borderDash: [],
+// }
 
 export const highContrastChartOptions: Chart.ChartOptions = {
   defaultColor: "#fff",
@@ -151,5 +178,37 @@ export const highContrastChartOptions: Chart.ChartOptions = {
         },
       },
     ],
+  },
+};
+
+export const stackedLineChartOptions: Chart.ChartOptions = {
+  scales: {
+    yAxes: [
+      {
+        stacked: true,
+      },
+    ],
+  },
+  tooltips: {
+    callbacks: {
+      title: (
+        item: Chart.ChartTooltipItem[],
+        data: Chart.ChartData
+      ): string => {
+        let total = 0;
+        if (!item) return "";
+        if (!data) return "";
+        if (!data.datasets) return "";
+        data.datasets.map((dataset: ChartDataSets) => {
+          const value = dataset!.data![item[0].index!];
+          if (typeof value === "number") {
+            return (total += value);
+          }
+        });
+        return `${((Number(item[0].yLabel) / total) * 100).toPrecision(
+          2
+        )}% (${usNumberFormat(Number(item[0].yLabel))})`;
+      },
+    },
   },
 };
