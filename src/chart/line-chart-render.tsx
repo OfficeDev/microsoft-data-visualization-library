@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import Chart from "chart.js";
-import { tooltipTrigger, tooltipAxisYLine } from "../lib/utils";
+import Chart, { PluginServiceRegistrationOptions } from "chart.js";
+import { tooltipTrigger } from "../lib/utils";
 import { IChart } from "../types";
+import { onDataPointHover } from "../lib/plugins";
 
 export const LineChart = (config: IChart) => {
-  const { data } = config;
+  const { data, plugins } = config;
 
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const chartRef = React.useRef<Chart | undefined>();
@@ -19,21 +20,21 @@ export const LineChart = (config: IChart) => {
 
     if (!canvasRef.current) return;
     const ctx = canvasRef.current.getContext("2d");
+
+    let _plugins: PluginServiceRegistrationOptions[] = [
+      {
+        afterDatasetsDraw: onDataPointHover,
+      },
+    ];
+    if (plugins) {
+      _plugins = [..._plugins, ...plugins];
+    }
     if (!ctx) return;
     const _config = {
       ...config,
-      plugins: [
-        {
-          afterDatasetsDraw: ({ ctx, tooltip, chart }: any) => {
-            tooltipAxisYLine({
-              chart,
-              ctx,
-              tooltip,
-            });
-          },
-        },
-      ],
+      plugins: _plugins,
     };
+
     // Chart Init
     chartRef.current = new Chart(ctx, _config);
     const chart: any = chartRef.current;

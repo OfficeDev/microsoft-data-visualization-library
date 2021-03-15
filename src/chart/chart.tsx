@@ -13,8 +13,10 @@ import { ChartTypes, IChart } from "../types";
 //   BarHorizontalStackedChart,
 //   BubbleChart,
 // } from "./chart-types";
-import { defaultChartOptions, mergeDeep } from "../lib/utils";
+
 import { LineChart } from "./line-chart-render";
+import { defaultChartOptions } from "../lib/settings";
+import { deepMerge } from "../lib/utils";
 
 (Chart as any).defaults.global.legend.display = false;
 (Chart as any).defaults.global.defaultFontFamily = `Segoe UI, system-ui, sans-serif`;
@@ -31,20 +33,16 @@ const CHARTS = {
   // [ChartTypes.Doughnut]: DoughnutChart,
   // [ChartTypes.Bubble]: BubbleChart,
 };
-
 export function ChartContainer(config: IChart) {
   const { options } = config;
   const ChartContainer = LineChart;
-
-  console.log({ config: mergeDeep(defaultChartOptions, options), options });
-
   return (
     <React.Suspense fallback={"Loading..."}>
       <ChartContainer
         {...config}
         options={
           options
-            ? mergeDeep(defaultChartOptions, options)
+            ? deepMerge(defaultChartOptions, options)
             : defaultChartOptions
         }
       />

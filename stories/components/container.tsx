@@ -30,6 +30,36 @@ export const Container = (props) => (
   </div>
 );
 
+export const DarkContainer = (props) => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      height: "100vh",
+      background: "#1B1A1A",
+    }}
+  >
+    <div
+      style={{
+        width: "100%",
+        maxWidth: "960px",
+        height: "400px",
+        background: "#2D2C2C",
+        borderRadius: "4px",
+        padding: "24px",
+        margin: "32px",
+        boxSizing: "border-box",
+        boxShadow:
+          "rgba(0, 0, 0, 0.75) 0px 48px 100px 0px, rgba(0, 0, 0, 0.75) 0px 60px 20px -60px",
+      }}
+    >
+      {props.children}
+    </div>
+  </div>
+);
+
 export const HighContrastContainer = (props) => (
   <div
     style={{
