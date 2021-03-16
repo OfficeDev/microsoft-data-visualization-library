@@ -2,9 +2,9 @@ import React from "react";
 import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
 import { Container, DarkContainer, HighContrastContainer } from "./components";
-import { ChartTypes, IChart, Point } from "../src/types";
-import { LineDataSetHCStyle, LineDataSetStyle } from "../src/lib/theme";
-import { highContrastOptions } from "../src/lib/settings";
+import { IChart, Point } from "../src/types";
+import { LineChart, LineChartHighContrast } from "../src/lib/builder";
+import { customOptions } from "./utils";
 
 export default {
   title: "Charts/Line",
@@ -45,14 +45,13 @@ const datasets = [
 ];
 
 export const Default = () => {
-  const dataVizProps: IChart = {
-    type: ChartTypes.Line,
+  const dataVizProps: IChart = new LineChart({
     areaLabel: "Line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(datasets, (set) => new LineDataSetStyle(set)),
+      datasets,
     },
-  };
+  });
   return (
     <Container>
       <Chart {...object("Configuration", dataVizProps, "Default")} />
@@ -100,18 +99,14 @@ const datasetsHighContrast = [
 ];
 
 export const HighContrast = () => {
-  const dataVizProps: IChart = {
-    type: ChartTypes.Line,
+  const dataVizProps: IChart = new LineChartHighContrast({
     areaLabel: "Line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(
-        datasetsHighContrast,
-        (set) => new LineDataSetHCStyle(set)
-      ),
+      datasets: datasetsHighContrast,
     },
-    options: highContrastOptions,
-  };
+    options: customOptions,
+  });
   return (
     <HighContrastContainer>
       <Chart {...object("Configuration", dataVizProps, "HighContrast")} />
@@ -153,44 +148,14 @@ const datasetsCustomTheme = [
 ];
 
 export const CustomTheme = () => {
-  const dataVizProps: IChart = {
-    type: ChartTypes.Line,
+  const dataVizProps: IChart = new LineChart({
     areaLabel: "Line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(
-        datasetsCustomTheme,
-        (set) => new LineDataSetStyle(set)
-      ),
+      datasets: datasetsCustomTheme,
     },
-    options: {
-      defaultColor: "#605E5C",
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              fontColor: "#979593",
-              maxTicksLimit: 8,
-            },
-            gridLines: {
-              color: "#484644",
-              zeroLineColor: "#484644",
-            },
-          },
-        ],
-        xAxes: [
-          {
-            ticks: {
-              fontColor: "#979593",
-            },
-            gridLines: {
-              color: "#484644",
-            },
-          },
-        ],
-      },
-    },
-  };
+    options: customOptions,
+  });
   return (
     <DarkContainer>
       <Chart {...object("Configuration", dataVizProps, "Custom Theme")} />

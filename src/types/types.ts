@@ -1,14 +1,11 @@
 import {
-  BorderAlignment,
-  BorderWidth,
-  ChartColor,
   ChartDataSets,
-  ChartPoint,
-  ChartType,
+  PluginServiceRegistrationOptions,
   PointStyle,
-  PositionType,
   Scriptable,
 } from "chart.js";
+import { Moment } from "moment";
+import { LineDataSetHCStyle } from "../lib/datasets";
 
 export class Entity {
   constructor(fields?: any) {
@@ -18,7 +15,7 @@ export class Entity {
 
 export interface IChart extends Chart.ChartConfiguration {
   areaLabel: string;
-  type: ChartTypes;
+  type?: ChartTypes;
 }
 
 export interface IChartOptions extends Chart.ChartOptions {
@@ -76,75 +73,54 @@ export enum HighContrastColors {
 
 export type IChartPatterns = (colorScheme: any) => IDraw[];
 
-export class BarDataSet extends Entity implements ChartDataSets {
-  cubicInterpolationMode?: "default" | "monotone";
-  backgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-  barPercentage?: number;
-  barThickness?: number | "flex";
-  borderAlign?:
-    | BorderAlignment
-    | BorderAlignment[]
-    | Scriptable<BorderAlignment>;
-  borderWidth?: BorderWidth | BorderWidth[] | Scriptable<BorderWidth>;
-  borderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-  borderCapStyle?: "butt" | "round" | "square";
-  borderDash?: number[];
-  borderDashOffset?: number;
-  borderJoinStyle?: "bevel" | "round" | "miter";
-  borderSkipped?: PositionType | PositionType[] | Scriptable<PositionType>;
-  categoryPercentage?: number;
-  data?: Array<number | null | undefined | number[]> | ChartPoint[];
-  fill?: boolean | number | string;
-  hitRadius?: number | number[] | Scriptable<number>;
-  hoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-  hoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-  hoverBorderWidth?: number | number[] | Scriptable<number>;
-  hoverRadius?: number;
-  label?: string;
-  lineTension?: number;
-  maxBarThickness?: number;
-  minBarLength?: number;
-  steppedLine?: "before" | "after" | "middle" | boolean;
-  order?: number;
-  pointBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-  pointBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-  pointBorderWidth?: number | number[] | Scriptable<number>;
-  pointRadius?: number | number[] | Scriptable<number>;
-  pointRotation?: number | number[] | Scriptable<number>;
-  pointHoverRadius?: number | number[] | Scriptable<number>;
-  pointHitRadius?: number | number[] | Scriptable<number>;
-  pointHoverBackgroundColor?:
-    | ChartColor
-    | ChartColor[]
-    | Scriptable<ChartColor>;
-  pointHoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-  pointHoverBorderWidth?: number | number[] | Scriptable<number>;
-  pointStyle?:
+export interface IChartData {
+  labels: Array<
+    string | string[] | number | number[] | Date | Date[] | Moment | Moment[]
+  >;
+  datasets: ChartDataSets[];
+}
+
+export interface IChartDataHighContrast extends IChartData {
+  datasets: HighContrastChartDataSets[];
+}
+
+export interface ILineChartDataHighContrast extends IChartData {
+  datasets: LineDataSetHCStyle[];
+}
+
+export interface LineHighContrastChartDataSets extends ChartDataSets {
+  borderDash: number[];
+  pointStyle:
     | PointStyle
     | HTMLImageElement
     | HTMLCanvasElement
     | Array<PointStyle | HTMLImageElement | HTMLCanvasElement>
     | Scriptable<PointStyle | HTMLImageElement | HTMLCanvasElement>;
-  radius?: number | number[] | Scriptable<number>;
-  rotation?: number | number[] | Scriptable<number>;
-  xAxisID?: string;
-  yAxisID?: string;
-  type?: ChartType | string;
-  hidden?: boolean;
-  hideInLegendAndTooltip?: boolean;
-  showLine?: boolean;
-  stack?: string;
-  spanGaps?: boolean;
-  weight?: number;
-  constructor(fields: Partial<BarDataSet>) {
-    super(fields);
-    this.borderWidth = fields.borderWidth || 0;
-    this.hoverBorderWidth = fields.hoverBorderWidth || 0;
-    this.pointHoverBorderWidth = fields.pointHoverBorderWidth || 0;
-    this.borderCapStyle = fields.borderCapStyle || "round";
-    this.borderJoinStyle = fields.borderJoinStyle || "round";
-    this.pointBorderWidth = fields.pointBorderWidth || 0;
-    this.pointRadius = fields.pointRadius || 0;
-    this.pointHoverRadius = fields.pointHoverRadius || 0;
-  }
+}
+
+export interface HighContrastChartDataSets extends ChartDataSets {
+  pattern: IDraw;
+}
+
+export interface IChartConfig {
+  type?: ChartTypes;
+  data: IChartData;
+  areaLabel: string;
+  options?: IChartOptions;
+  plugins?: PluginServiceRegistrationOptions[];
+  highContrastMode?: boolean;
+}
+
+export interface IPreSetupConfig {
+  areaLabel: string;
+  data: IChartData;
+  options?: IChartOptions;
+  plugins?: PluginServiceRegistrationOptions[];
+}
+
+export interface IPreSetupConfigHighContrast extends IPreSetupConfig {
+  data: IChartDataHighContrast;
+}
+export interface ILinePreSetupConfigHighContrast extends IPreSetupConfig {
+  data: ILineChartDataHighContrast;
 }

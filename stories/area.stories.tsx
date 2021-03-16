@@ -3,10 +3,11 @@ import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
 import { Container, DarkContainer, HighContrastContainer } from "./components";
 import { ChartTypes, IChart, Point } from "../src/types";
-import { LineDataSetHCStyle, LineDataSetStyle } from "../src/lib/theme";
+import { LineDataSetHCStyle, LineDataSetStyle } from "../src/lib/datasets";
 import { ChartDataSets } from "chart.js";
 import { gradientPlugin } from "../src/lib/plugins";
 import { highContrastOptions } from "../src/lib/settings";
+import { customOptions } from "./utils";
 
 export default {
   title: "Charts/Area",
@@ -114,33 +115,7 @@ export const CustomTheme = () => {
         (set) => new LineDataSetStyle(set)
       ),
     },
-    options: {
-      defaultColor: "#605E5C",
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              fontColor: "#979593",
-              maxTicksLimit: 8,
-            },
-            gridLines: {
-              color: "#484644",
-              zeroLineColor: "#484644",
-            },
-          },
-        ],
-        xAxes: [
-          {
-            ticks: {
-              fontColor: "#979593",
-            },
-            gridLines: {
-              color: "#484644",
-            },
-          },
-        ],
-      },
-    },
+    options: customOptions,
     plugins: [
       {
         afterLayout: gradientPlugin,

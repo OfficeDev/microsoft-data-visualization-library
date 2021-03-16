@@ -1,15 +1,9 @@
 import React, { useEffect } from "react";
-import Chart, { PluginServiceRegistrationOptions } from "chart.js";
+import Chart from "chart.js";
 import { IChart } from "../types";
-import {
-  removeAllListeners,
-  keyboardAccessibility,
-  highLightDataOnHover,
-  axisXTeamsStyle,
-} from "../lib/plugins";
 
 export const ChartRender = (config: IChart) => {
-  const { data, plugins } = config;
+  const { data } = config;
 
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const chartRef = React.useRef<Chart | undefined>();
@@ -21,32 +15,9 @@ export const ChartRender = (config: IChart) => {
   useEffect(() => {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current.getContext("2d");
-
-    let _plugins: PluginServiceRegistrationOptions[] = [
-      {
-        afterInit: keyboardAccessibility,
-      },
-      {
-        afterInit: axisXTeamsStyle,
-      },
-      {
-        afterDatasetsDraw: highLightDataOnHover,
-      },
-      {
-        destroy: removeAllListeners,
-      },
-    ];
-    if (plugins) {
-      _plugins = [..._plugins, ...plugins];
-    }
     if (!ctx) return;
-    const _config = {
-      ...config,
-      plugins: _plugins,
-    };
-
     // Chart Init
-    chartRef.current = new Chart(ctx, _config);
+    chartRef.current = new Chart(ctx, { ...config });
   }, []);
 
   return (

@@ -3,19 +3,24 @@ import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
 import { Container } from "./components";
 import { ChartTypes, IChart } from "../src/types";
-import { BarDataSetStyle } from "../src/lib/theme";
+import { BarDataSetStyle } from "../src/lib/datasets";
 import { barOptions } from "../src/lib/settings";
 
 export default {
-  title: "Charts/Bar",
+  title: "Charts/Stacked bar",
   component: Chart,
 };
 
 const datasets = [
   {
-    label: "Tablets",
-    data: [860, 6700, 3100, 2012, 1930],
-    color: "#6264A7",
+    label: "Laptops",
+    data: [1860, 7700, 4100, 3012, 2930],
+    color: "",
+  },
+  {
+    label: "Watches",
+    data: [1200, 3600, 2480, 5049, 4596],
+    color: "",
   },
 ];
 

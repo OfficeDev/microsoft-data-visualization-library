@@ -119,12 +119,12 @@ export class LineDataSetStyle extends Entity implements ChartDataSets {
 }
 
 export class LineDataSetHCStyle extends LineDataSetStyle {
-  borderColor: string;
-  hoverBorderColor: string;
-  pointBorderColor: string;
-  pointBackgroundColor: string;
-  pointHoverBackgroundColor: string;
-  pointHoverBorderColor: string;
+  borderColor?: string;
+  hoverBorderColor?: string;
+  pointBorderColor?: string;
+  pointBackgroundColor?: string;
+  pointHoverBackgroundColor?: string;
+  pointHoverBorderColor?: string;
   hoverBorderWidth?: number | number[] | Scriptable<number>;
   pointRadius?: number | number[] | Scriptable<number>;
   pointHoverRadius?: number | number[] | Scriptable<number>;
@@ -136,7 +136,7 @@ export class LineDataSetHCStyle extends LineDataSetStyle {
     | Array<PointStyle | HTMLImageElement | HTMLCanvasElement>
     | Scriptable<PointStyle | HTMLImageElement | HTMLCanvasElement>;
 
-  constructor(fields: Partial<LineDataSetHCStyle>) {
+  constructor(fields: LineDataSetHCStyle) {
     super(fields);
     this.borderColor = HighContrastColors.Foreground;
     this.hoverBorderColor = HighContrastColors.Active;
@@ -153,7 +153,7 @@ export class LineDataSetHCStyle extends LineDataSetStyle {
 }
 
 export class LineStackedDataSetStyle extends LineDataSetStyle {
-  constructor(fields: Partial<LineStackedDataSetStyle>) {
+  constructor(fields: LineStackedDataSetStyle) {
     super(fields);
     this.backgroundColor =
       fields.backgroundColor || fields.color || "rgba(0,0,0,.1)";
@@ -172,7 +172,7 @@ export class LineStackedDataSetStyle extends LineDataSetStyle {
 export class LineStackedDataSetHCStyle extends LineStackedDataSetStyle {
   pattern: IDraw;
 
-  constructor(fields: Partial<LineStackedDataSetHCStyle>) {
+  constructor(fields: LineStackedDataSetHCStyle) {
     super(fields);
     this.pattern = fields.pattern || {
       shape: Shapes.Square,
@@ -205,7 +205,7 @@ export class BarDataSetStyle extends Entity implements ChartDataSets {
   hoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   hoverBorderWidth?: number | number[] | Scriptable<number>;
 
-  constructor(fields: Partial<BarDataSetStyle>) {
+  constructor(fields: BarDataSetStyle) {
     super(fields);
     this.borderWidth = fields.borderWidth || 0;
     this.backgroundColor =
@@ -218,10 +218,9 @@ export class BarDataSetStyle extends Entity implements ChartDataSets {
 
 export class BarDataSetHCStyle extends BarDataSetStyle {
   hoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-
   pattern: IDraw;
 
-  constructor(fields: Partial<BarDataSetHCStyle>) {
+  constructor(fields: BarDataSetHCStyle) {
     super(fields);
     this.pattern = fields.pattern || {
       shape: Shapes.Square,

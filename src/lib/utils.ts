@@ -1,13 +1,7 @@
-import { SiteVariablesPrepared } from "@fluentui/react-northstar";
-import { ChartData, ChartDataSets } from "chart.js";
-import {
-  ChartTypes,
-  HighContrastColors,
-  IChartOptions,
-  IChartPatterns,
-} from "../types";
+import { ChartDataSets } from "chart.js";
+import { ChartTypes, HighContrastColors, IChartOptions } from "../types";
 import { buildPattern } from "./patterns";
-import { LineDataSetHCStyle, LineStackedDataSetHCStyle } from "./theme";
+import { LineDataSetHCStyle, LineStackedDataSetHCStyle } from "./datasets";
 
 export const PI = Math.PI;
 export const HALF_PI = PI / 2;
@@ -181,60 +175,60 @@ export function showTooltipOnKayboard({
   (chart as any).draw();
 }
 
-export const setTooltipColorScheme = ({
-  chart,
-  siteVariables,
-  chartDataPointColors,
-  patterns,
-  verticalDataAlignment,
-}: {
-  chart: Chart;
-  siteVariables: SiteVariablesPrepared;
-  chartDataPointColors: string[];
-  patterns?: IChartPatterns;
-  verticalDataAlignment?: boolean;
-}) => {
-  const { colorScheme } = siteVariables;
-  chart.options.tooltips = {
-    ...chart.options.tooltips,
-    borderColor: colorScheme.default.borderHover,
-    multiKeyBackground: colorScheme.white.foreground,
-    titleFontColor: colorScheme.default.foreground3,
-    bodyFontColor: colorScheme.default.foreground3,
-    footerFontColor: colorScheme.default.foreground3,
-    // callbacks: {
-    //   ...chart.options.tooltips?.callbacks,
-    //   labelColor:
-    //     patterns && theme === ChartTheme.HighContrast
-    //       ? (tooltipItem: any) => ({
-    //         borderColor: "transparent",
-    //         backgroundColor: buildPattern({
-    //           ...patterns(colorScheme)[
-    //           verticalDataAlignment
-    //             ? tooltipItem.index
-    //             : tooltipItem.datasetIndex
-    //           ],
-    //           backgroundColor: colorScheme.default.background,
-    //           patternColor: colorScheme.default.borderHover,
-    //         }) as any,
-    //       })
-    //       : (tooltipItem: any) => ({
-    //         borderColor: "transparent",
-    //         backgroundColor:
-    //           chartDataPointColors[
-    //           verticalDataAlignment
-    //             ? tooltipItem.index
-    //             : tooltipItem.datasetIndex
-    //           ],
-    //       }),
-    // },
-  };
-  // if (siteVariables.theme === ChartTheme.HighContrast) {
-  //   (chart as any).options.scales.yAxes[0].gridLines.lineWidth = 0.25;
-  // } else {
-  //   (chart as any).options.scales.yAxes[0].gridLines.lineWidth = 1;
-  // }
-};
+// export const setTooltipColorScheme = ({
+//   chart,
+//   siteVariables,
+//   chartDataPointColors,
+//   patterns,
+//   verticalDataAlignment,
+// }: {
+//   chart: Chart;
+//   siteVariables: SiteVariablesPrepared;
+//   chartDataPointColors: string[];
+//   patterns?: IChartPatterns;
+//   verticalDataAlignment?: boolean;
+// }) => {
+//   const { colorScheme } = siteVariables;
+//   chart.options.tooltips = {
+//     ...chart.options.tooltips,
+//     borderColor: colorScheme.default.borderHover,
+//     multiKeyBackground: colorScheme.white.foreground,
+//     titleFontColor: colorScheme.default.foreground3,
+//     bodyFontColor: colorScheme.default.foreground3,
+//     footerFontColor: colorScheme.default.foreground3,
+//     // callbacks: {
+//     //   ...chart.options.tooltips?.callbacks,
+//     //   labelColor:
+//     //     patterns && theme === ChartTheme.HighContrast
+//     //       ? (tooltipItem: any) => ({
+//     //         borderColor: "transparent",
+//     //         backgroundColor: buildPattern({
+//     //           ...patterns(colorScheme)[
+//     //           verticalDataAlignment
+//     //             ? tooltipItem.index
+//     //             : tooltipItem.datasetIndex
+//     //           ],
+//     //           backgroundColor: colorScheme.default.background,
+//     //           patternColor: colorScheme.default.borderHover,
+//     //         }) as any,
+//     //       })
+//     //       : (tooltipItem: any) => ({
+//     //         borderColor: "transparent",
+//     //         backgroundColor:
+//     //           chartDataPointColors[
+//     //           verticalDataAlignment
+//     //             ? tooltipItem.index
+//     //             : tooltipItem.datasetIndex
+//     //           ],
+//     //       }),
+//     // },
+//   };
+//   // if (siteVariables.theme === ChartTheme.HighContrast) {
+//   //   (chart as any).options.scales.yAxes[0].gridLines.lineWidth = 0.25;
+//   // } else {
+//   //   (chart as any).options.scales.yAxes[0].gridLines.lineWidth = 1;
+//   // }
+// };
 
 export const tooltipConfig = () => ({
   yPadding: 12,

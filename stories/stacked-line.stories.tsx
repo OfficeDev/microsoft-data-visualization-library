@@ -7,9 +7,10 @@ import {
   LineStackedDataSetHCStyle,
   LineStackedDataSetStyle,
   Patterns,
-} from "../src/lib/theme";
+} from "../src/lib/datasets";
 import { highContrastOptions, stackedLineOptions } from "../src/lib/settings";
 import { deepMerge } from "../src/lib/utils";
+import { customOptions } from "./utils";
 
 export default {
   title: "Charts/Stacked line",
@@ -118,33 +119,7 @@ export const CustomTheme = () => {
         (set) => new LineStackedDataSetStyle(set)
       ),
     },
-    options: deepMerge(stackedLineOptions, {
-      defaultColor: "#605E5C",
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              fontColor: "#979593",
-              maxTicksLimit: 8,
-            },
-            gridLines: {
-              color: "#484644",
-              zeroLineColor: "#484644",
-            },
-          },
-        ],
-        xAxes: [
-          {
-            ticks: {
-              fontColor: "#979593",
-            },
-            gridLines: {
-              color: "#484644",
-            },
-          },
-        ],
-      },
-    }),
+    options: deepMerge(stackedLineOptions, customOptions),
   };
   return (
     <DarkContainer>

@@ -3,9 +3,14 @@ import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
 import { Container, DarkContainer, HighContrastContainer } from "./components";
 import { ChartTypes, IChart } from "../src/types";
-import { BarDataSetHCStyle, BarDataSetStyle, Patterns } from "../src/lib/theme";
+import {
+  BarDataSetHCStyle,
+  BarDataSetStyle,
+  Patterns,
+} from "../src/lib/datasets";
 import { barOptions, highContrastOptions } from "../src/lib/settings";
 import { deepMerge } from "../src/lib/utils";
+import { customOptions } from "./utils";
 
 export default {
   title: "Charts/Bar",
@@ -84,36 +89,7 @@ export const CustomTheme = () => {
         (set) => new BarDataSetStyle(set)
       ),
     },
-    options: deepMerge(
-      {
-        defaultColor: "#605E5C",
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                fontColor: "#979593",
-                maxTicksLimit: 8,
-              },
-              gridLines: {
-                color: "#484644",
-                zeroLineColor: "#484644",
-              },
-            },
-          ],
-          xAxes: [
-            {
-              ticks: {
-                fontColor: "#979593",
-              },
-              gridLines: {
-                color: "#484644",
-              },
-            },
-          ],
-        },
-      },
-      barOptions
-    ),
+    options: deepMerge(barOptions, customOptions),
   };
   return (
     <DarkContainer>
