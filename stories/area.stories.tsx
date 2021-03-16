@@ -3,13 +3,10 @@ import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
 import { Container, DarkContainer, HighContrastContainer } from "./components";
 import { ChartTypes, IChart, Point } from "../src/types";
-import {
-  LineChartDataSetHCStyle,
-  LineChartDataSetStyle,
-} from "../src/lib/theme";
+import { LineDataSetHCStyle, LineDataSetStyle } from "../src/lib/theme";
 import { ChartDataSets } from "chart.js";
 import { gradientPlugin } from "../src/lib/plugins";
-import { highContrastChartOptions } from "../src/lib/settings";
+import { highContrastOptions } from "../src/lib/settings";
 
 export default {
   title: "Charts/Area",
@@ -37,7 +34,7 @@ export const Default = () => {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets: Array.from(
         datasets,
-        (set: ChartDataSets) => new LineChartDataSetStyle(set)
+        (set: ChartDataSets) => new LineDataSetStyle(set)
       ),
     },
     plugins: [
@@ -71,15 +68,15 @@ const datasetsHighContrast = [
 export const HighContrast = () => {
   const dataVizProps: IChart = {
     type: ChartTypes.Line,
-    areaLabel: "Line chart sample",
+    areaLabel: "Area chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets: Array.from(
         datasetsHighContrast,
-        (set) => new LineChartDataSetHCStyle(set)
+        (set) => new LineDataSetHCStyle(set)
       ),
     },
-    options: highContrastChartOptions,
+    options: highContrastOptions,
     plugins: [
       {
         afterLayout: gradientPlugin,
@@ -109,12 +106,12 @@ const datasetsCustomTheme = [
 export const CustomTheme = () => {
   const dataVizProps: IChart = {
     type: ChartTypes.Line,
-    areaLabel: "Line chart sample",
+    areaLabel: "Area chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets: Array.from(
         datasetsCustomTheme,
-        (set) => new LineChartDataSetStyle(set)
+        (set) => new LineDataSetStyle(set)
       ),
     },
     options: {

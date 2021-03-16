@@ -3,11 +3,8 @@ import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
 import { Container, DarkContainer, HighContrastContainer } from "./components";
 import { ChartTypes, IChart, Point } from "../src/types";
-import {
-  LineChartDataSetHCStyle,
-  LineChartDataSetStyle,
-} from "../src/lib/theme";
-import { highContrastChartOptions } from "../src/lib/settings";
+import { LineDataSetHCStyle, LineDataSetStyle } from "../src/lib/theme";
+import { highContrastOptions } from "../src/lib/settings";
 
 export default {
   title: "Charts/Line",
@@ -53,7 +50,7 @@ export const Default = () => {
     areaLabel: "Line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(datasets, (set) => new LineChartDataSetStyle(set)),
+      datasets: Array.from(datasets, (set) => new LineDataSetStyle(set)),
     },
   };
   return (
@@ -110,10 +107,10 @@ export const HighContrast = () => {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets: Array.from(
         datasetsHighContrast,
-        (set) => new LineChartDataSetHCStyle(set)
+        (set) => new LineDataSetHCStyle(set)
       ),
     },
-    options: highContrastChartOptions,
+    options: highContrastOptions,
   };
   return (
     <HighContrastContainer>
@@ -163,7 +160,7 @@ export const CustomTheme = () => {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets: Array.from(
         datasetsCustomTheme,
-        (set) => new LineChartDataSetStyle(set)
+        (set) => new LineDataSetStyle(set)
       ),
     },
     options: {

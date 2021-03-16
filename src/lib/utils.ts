@@ -1,8 +1,13 @@
 import { SiteVariablesPrepared } from "@fluentui/react-northstar";
 import { ChartData, ChartDataSets } from "chart.js";
-import { IChartPatterns } from "../types";
+import {
+  ChartTypes,
+  HighContrastColors,
+  IChartOptions,
+  IChartPatterns,
+} from "../types";
 import { buildPattern } from "./patterns";
-import { LineChartDataSetHCStyle } from "./theme";
+import { LineDataSetHCStyle, LineStackedDataSetHCStyle } from "./theme";
 
 export const PI = Math.PI;
 export const HALF_PI = PI / 2;
@@ -88,77 +93,92 @@ export function isHCThemeApplied(chart: any): boolean {
   );
 }
 
-export function tooltipTrigger({
+export function showTooltipOnKayboard({
   chart,
-  data,
-  set,
-  index,
-  mergeDuplicates,
+  setIndex,
+  selectedPointIndex,
 }: {
-  chart: any;
-  data: ChartData;
-  set: number;
-  index: number;
-  mergeDuplicates?: boolean;
+  chart: Chart;
+  setIndex: number;
+  selectedPointIndex: number;
 }) {
-  if (mergeDuplicates) {
+  const { type, data, options } = chart.config;
+  const { datasets } = data as any;
+  if (
+    type === ChartTypes.Line ||
+    !(chart.config.options?.scales as any).yAxes[0].stacked
+  ) {
     const duplicates: number[] = [];
     const segments: any[] = [];
-    // Check for equal data points
-    const fakeSet = isHCThemeApplied(chart)
-      ? new LineChartDataSetHCStyle({} as any)
-      : undefined;
-    data!.datasets!.filter((dataset: ChartDataSets, i: number) => {
-      if (dataset!.data![index] === data!.datasets![set].data![index]) {
+    const fakeSet = new LineDataSetHCStyle({} as any);
+    datasets!.filter((dataset: ChartDataSets, i: number) => {
+      if (
+        dataset!.data![selectedPointIndex] ===
+        data!.datasets![setIndex].data![selectedPointIndex]
+      ) {
         duplicates.push(i);
       }
-      if (fakeSet) {
-        chart.data.datasets[i].borderColor = fakeSet.borderColor;
-        chart.data.datasets[i].borderWidth = fakeSet.borderWidth;
+      if ((options as IChartOptions).highContrastMode) {
+        datasets[i].borderColor = fakeSet.borderColor;
+        datasets[i].borderWidth = fakeSet.borderWidth;
+        if (typeof datasets[i].backgroundColor !== "string") {
+          datasets[i].backgroundColor = buildPattern({
+            backgroundColor: HighContrastColors.Background,
+            patternColor: fakeSet.borderColor,
+            ...datasets[i].pattern,
+          });
+        }
       }
     });
     duplicates.forEach((segmentId) => {
-      segments.push(chart.getDatasetMeta(segmentId).data[index]);
-      if (fakeSet) {
-        chart.data.datasets[segmentId].borderColor = fakeSet.hoverBorderColor;
-        chart.data.datasets[segmentId].borderWidth = fakeSet.hoverBorderWidth;
+      segments.push(chart.getDatasetMeta(segmentId).data[selectedPointIndex]);
+      if ((options as IChartOptions).highContrastMode) {
+        datasets[segmentId].borderColor = fakeSet.hoverBorderColor;
+        datasets[segmentId].borderWidth = fakeSet.hoverBorderWidth;
+        if (typeof datasets[segmentId].backgroundColor !== "string") {
+          datasets[segmentId].backgroundColor = buildPattern({
+            backgroundColor: HighContrastColors.Background,
+            patternColor: fakeSet.hoverBorderColor,
+            ...datasets[segmentId].pattern,
+          });
+        }
       }
     });
-    if (fakeSet) {
+    if ((options as IChartOptions).highContrastMode) {
       chart.update();
     }
-    chart.tooltip._active = segments;
+    (chart as any).tooltip._active = segments;
   } else {
-    const segment = chart.getDatasetMeta(set).data[index];
-    chart.tooltip._active = [segment];
-    if (isHCThemeApplied(chart)) {
-      chart.data.datasets.map((dataset: any, i: number) => {
+    const fakeSet = new LineStackedDataSetHCStyle({} as any);
+    const segment = chart.getDatasetMeta(setIndex).data[selectedPointIndex];
+    (chart as any).tooltip._active = [segment];
+    if ((options as IChartOptions).highContrastMode) {
+      datasets.map((dataset: any, i: number) => {
         if (dataset.pattern) {
-          dataset.borderColor = "#fff";
-          dataset.borderWidth = 2;
+          dataset.borderColor = fakeSet.borderColor;
+          dataset.borderWidth = fakeSet.borderWidth;
           dataset.backgroundColor = buildPattern({
-            backgroundColor: "#000",
-            patternColor: "#fff",
+            backgroundColor: HighContrastColors.Background,
+            patternColor: fakeSet.borderColor,
             ...dataset.pattern,
           });
         }
       });
-      chart.data.datasets[set].borderColor = "#1aebff";
-      chart.data.datasets[set].borderWidth = 4;
-      chart.data.datasets[set].backgroundColor = chart.data.datasets[
-        set
+      datasets[setIndex].borderColor = fakeSet.hoverBorderColor;
+      datasets[setIndex].borderWidth = fakeSet.hoverBorderWidth;
+      datasets[setIndex].backgroundColor = datasets[
+        setIndex
       ].backgroundColor = buildPattern({
-        backgroundColor: "#000",
-        patternColor: "#1aebff",
-        ...chart.data.datasets[set].pattern,
+        backgroundColor: HighContrastColors.Background,
+        patternColor: fakeSet.hoverBorderColor,
+        ...datasets[setIndex].pattern,
       });
-      chart.update();
-      console.log({ chart });
     }
   }
 
-  chart.tooltip.update();
-  chart.draw();
+  chart.update();
+  (chart as any).tooltip.update();
+  (chart as any).draw();
 }
 
 export const setTooltipColorScheme = ({
@@ -177,16 +197,11 @@ export const setTooltipColorScheme = ({
   const { colorScheme } = siteVariables;
   chart.options.tooltips = {
     ...chart.options.tooltips,
-    // backgroundColor:
-    //   theme === ChartTheme.Dark
-    //     ? colorScheme.default.border2
-    //     : colorScheme.default.foregroundFocus,
     borderColor: colorScheme.default.borderHover,
     multiKeyBackground: colorScheme.white.foreground,
     titleFontColor: colorScheme.default.foreground3,
     bodyFontColor: colorScheme.default.foreground3,
     footerFontColor: colorScheme.default.foreground3,
-    // borderWidth: theme === ChartTheme.HighContrast ? 2 : 0,
     // callbacks: {
     //   ...chart.options.tooltips?.callbacks,
     //   labelColor:

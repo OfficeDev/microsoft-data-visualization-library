@@ -21,6 +21,10 @@ export interface IChart extends Chart.ChartConfiguration {
   type: ChartTypes;
 }
 
+export interface IChartOptions extends Chart.ChartOptions {
+  highContrastMode?: boolean;
+}
+
 export interface IBubbleChartData {
   x: number;
   y: number;
@@ -35,12 +39,7 @@ export interface IChartDataSet {
 
 export enum ChartTypes {
   Line = "line",
-  LineStacked = "lineStacked",
-  LineArea = "lineArea",
   Bar = "bar",
-  BarStacked = "barStacked",
-  BarHorizontal = "barHorizontal",
-  BarHorizontalStacked = "barHorizontalStacked",
   Pie = "pie",
   Doughnut = "doughnut",
   Bubble = "bubble",
@@ -65,6 +64,14 @@ export enum Shapes {
 export interface IDraw {
   shape: Shapes;
   size: number;
+}
+
+export enum HighContrastColors {
+  Foreground = "#fff",
+  Background = "#000",
+  Active = "#1aebff",
+  Selected = "#ffff01",
+  Disabled = "#3ff23f",
 }
 
 export type IChartPatterns = (colorScheme: any) => IDraw[];

@@ -5,7 +5,7 @@ import {
   PointStyle,
   Scriptable,
 } from "chart.js";
-import { Entity, IDraw, Point, Shapes } from "../types";
+import { Entity, HighContrastColors, IDraw, Point, Shapes } from "../types";
 import { buildPattern } from "./patterns";
 
 // export class ChartDataSet extends Entity implements ChartDataSets {
@@ -63,7 +63,7 @@ import { buildPattern } from "./patterns";
 //   }
 // }
 
-export class LineChartDataSetStyle extends Entity implements ChartDataSets {
+export class LineDataSetStyle extends Entity implements ChartDataSets {
   borderCapStyle?: "butt" | "round" | "square";
   borderJoinStyle?: "bevel" | "round" | "miter";
   borderWidth?: BorderWidth | BorderWidth[] | Scriptable<BorderWidth>;
@@ -91,7 +91,7 @@ export class LineChartDataSetStyle extends Entity implements ChartDataSets {
     | Scriptable<ChartColor>;
   pointHoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
 
-  constructor(fields: Partial<LineChartDataSetStyle>) {
+  constructor(fields: Partial<LineDataSetStyle>) {
     super(fields);
     this.backgroundColor = fields.backgroundColor || "transparent";
     this.borderCapStyle = fields.borderCapStyle || "round";
@@ -118,7 +118,7 @@ export class LineChartDataSetStyle extends Entity implements ChartDataSets {
   }
 }
 
-export class LineChartDataSetHCStyle extends LineChartDataSetStyle {
+export class LineDataSetHCStyle extends LineDataSetStyle {
   borderColor: string;
   hoverBorderColor: string;
   pointBorderColor: string;
@@ -136,14 +136,14 @@ export class LineChartDataSetHCStyle extends LineChartDataSetStyle {
     | Array<PointStyle | HTMLImageElement | HTMLCanvasElement>
     | Scriptable<PointStyle | HTMLImageElement | HTMLCanvasElement>;
 
-  constructor(fields: Partial<LineChartDataSetHCStyle>) {
+  constructor(fields: Partial<LineDataSetHCStyle>) {
     super(fields);
-    this.borderColor = "#fff";
-    this.hoverBorderColor = "#1aebff";
-    this.pointBorderColor = "#fff";
-    this.pointBackgroundColor = "#fff";
-    this.pointHoverBackgroundColor = "#fff";
-    this.pointHoverBorderColor = "#fff";
+    this.borderColor = HighContrastColors.Foreground;
+    this.hoverBorderColor = HighContrastColors.Active;
+    this.pointBorderColor = HighContrastColors.Foreground;
+    this.pointBackgroundColor = HighContrastColors.Foreground;
+    this.pointHoverBackgroundColor = HighContrastColors.Foreground;
+    this.pointHoverBorderColor = HighContrastColors.Foreground;
     this.hoverBorderWidth = 4;
     this.pointRadius = 4;
     this.pointHoverRadius = 4;
@@ -152,8 +152,8 @@ export class LineChartDataSetHCStyle extends LineChartDataSetStyle {
   }
 }
 
-export class LineStackedChartDataSetStyle extends LineChartDataSetStyle {
-  constructor(fields: Partial<LineStackedChartDataSetStyle>) {
+export class LineStackedDataSetStyle extends LineDataSetStyle {
+  constructor(fields: Partial<LineStackedDataSetStyle>) {
     super(fields);
     this.backgroundColor =
       fields.backgroundColor || fields.color || "rgba(0,0,0,.1)";
@@ -168,27 +168,28 @@ export class LineStackedChartDataSetStyle extends LineChartDataSetStyle {
     this.pointHoverBorderWidth = fields.pointHoverBorderWidth || 2;
   }
 }
-export class LineStackedChartDataSetHCStyle extends LineStackedChartDataSetStyle {
+
+export class LineStackedDataSetHCStyle extends LineStackedDataSetStyle {
   pattern: IDraw;
 
-  constructor(fields: Partial<LineStackedChartDataSetHCStyle>) {
+  constructor(fields: Partial<LineStackedDataSetHCStyle>) {
     super(fields);
     this.pattern = fields.pattern || {
       shape: Shapes.Square,
       size: 10,
     };
     this.backgroundColor = buildPattern({
-      backgroundColor: "#000",
-      patternColor: "#fff",
+      backgroundColor: HighContrastColors.Background,
+      patternColor: HighContrastColors.Foreground,
       ...this.pattern,
     }) as any;
     this.hoverBackgroundColor = buildPattern({
-      backgroundColor: "#000",
-      patternColor: "#1aebff",
+      backgroundColor: HighContrastColors.Background,
+      patternColor: HighContrastColors.Active,
       ...this.pattern,
     }) as any;
-    this.borderColor = "#fff";
-    this.hoverBorderColor = "#1aebff";
+    this.borderColor = HighContrastColors.Foreground;
+    this.hoverBorderColor = HighContrastColors.Active;
     this.borderWidth = fields.borderWidth || 3;
     this.hoverBorderWidth = fields.hoverBorderWidth || 4;
     this.hoverBorderWidth = fields.hoverBorderWidth || 5;
@@ -196,31 +197,77 @@ export class LineStackedChartDataSetHCStyle extends LineStackedChartDataSetStyle
   }
 }
 
-export const Patterns = {
-  LineStacked: {
-    Square: {
+export class BarDataSetStyle extends Entity implements ChartDataSets {
+  backgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  borderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  borderWidth?: BorderWidth | BorderWidth[] | Scriptable<BorderWidth>;
+  color?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  hoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  hoverBorderWidth?: number | number[] | Scriptable<number>;
+
+  constructor(fields: Partial<BarDataSetStyle>) {
+    super(fields);
+    this.borderWidth = fields.borderWidth || 0;
+    this.backgroundColor =
+      fields.backgroundColor || fields.color || "rgba(0,0,0,.1)";
+    this.hoverBorderWidth = fields.hoverBorderWidth || 0;
+    this.hoverBackgroundColor =
+      fields.hoverBackgroundColor || fields.color || "rgba(0,0,0,.1)";
+  }
+}
+
+export class BarDataSetHCStyle extends BarDataSetStyle {
+  hoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+
+  pattern: IDraw;
+
+  constructor(fields: Partial<BarDataSetHCStyle>) {
+    super(fields);
+    this.pattern = fields.pattern || {
       shape: Shapes.Square,
       size: 10,
-    },
-    Diagonal: {
-      shape: Shapes.DiagonalRightLeft,
-      size: 5,
-    },
-    Grid: {
-      shape: Shapes.Grid,
-      size: 10,
-    },
-    Line: {
-      shape: Shapes.VerticalLine,
-      size: 10,
-    },
-    Grid2: {
-      shape: Shapes.GridRightLeft,
-      size: 3,
-    },
-    Diagonal2: {
-      shape: Shapes.Diagonal,
-      size: 5,
-    },
+    };
+    this.backgroundColor = buildPattern({
+      backgroundColor: HighContrastColors.Background,
+      patternColor: HighContrastColors.Foreground,
+      ...this.pattern,
+    }) as any;
+    this.hoverBackgroundColor = buildPattern({
+      backgroundColor: HighContrastColors.Background,
+      patternColor: HighContrastColors.Active,
+      ...this.pattern,
+    }) as any;
+
+    this.borderWidth = fields.borderWidth || 1;
+    this.borderColor = HighContrastColors.Foreground;
+    this.hoverBorderWidth = fields.hoverBorderWidth || 3;
+    this.hoverBorderColor = HighContrastColors.Active;
+  }
+}
+
+export const Patterns = {
+  Square: {
+    shape: Shapes.Square,
+    size: 10,
+  },
+  Diagonal: {
+    shape: Shapes.DiagonalRightLeft,
+    size: 5,
+  },
+  Diagonal2: {
+    shape: Shapes.Diagonal,
+    size: 5,
+  },
+  Grid: {
+    shape: Shapes.Grid,
+    size: 10,
+  },
+  Grid2: {
+    shape: Shapes.GridRightLeft,
+    size: 3,
+  },
+  Line: {
+    shape: Shapes.VerticalLine,
+    size: 10,
   },
 };
