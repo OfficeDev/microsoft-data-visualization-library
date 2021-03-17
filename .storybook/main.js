@@ -2,15 +2,17 @@ const path = require("path");
 const tsconfig = path.resolve(__dirname, "../tsconfig.json");
 
 module.exports = {
-  stories: ["../stories/**/*.stories.+(ts|tsx)"],
+  stories: [
+    "../stories/**/*.stories.+(ts|tsx)",
+    "../stories/docs/*.stories.mdx",
+  ],
   addons: [
-    "@storybook/addon-actions",
+    // "@storybook/addon-actions",
     "@storybook/addon-links",
     "@storybook/addon-docs",
     "@storybook/addon-viewport/register",
     "@storybook/addon-a11y/register",
-    "@storybook/addon-knobs/register",
-    "storybook-addon-designs",
+    // "@storybook/addon-knobs/register",
   ],
   typescript: {
     check: true,

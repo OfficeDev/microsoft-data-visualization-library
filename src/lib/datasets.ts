@@ -3,6 +3,7 @@ import {
   ChartColor,
   ChartDataSets,
   PointStyle,
+  PositionType,
   Scriptable,
 } from "chart.js";
 import { Entity, HighContrastColors, IDraw, Point, Shapes } from "../types";
@@ -204,6 +205,7 @@ export class BarDataSetStyle extends Entity implements ChartDataSets {
   color?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   hoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   hoverBorderWidth?: number | number[] | Scriptable<number>;
+  borderSkipped?: PositionType | PositionType[] | Scriptable<PositionType>;
 
   constructor(fields: BarDataSetStyle) {
     super(fields);
@@ -213,6 +215,7 @@ export class BarDataSetStyle extends Entity implements ChartDataSets {
     this.hoverBorderWidth = fields.hoverBorderWidth || 0;
     this.hoverBackgroundColor =
       fields.hoverBackgroundColor || fields.color || "rgba(0,0,0,.1)";
+    this.borderSkipped = fields.borderSkipped || (false as any);
   }
 }
 

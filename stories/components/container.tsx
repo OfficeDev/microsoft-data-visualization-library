@@ -3,11 +3,16 @@ import React from "react";
 export const Container = (props) => (
   <div
     style={{
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
       width: "100%",
-      height: "100vh",
+      height: "100%",
       background: "#f3f2f1",
     }}
   >
@@ -33,11 +38,16 @@ export const Container = (props) => (
 export const DarkContainer = (props) => (
   <div
     style={{
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
       width: "100%",
-      height: "100vh",
+      height: "100%",
       background: "#1B1A1A",
     }}
   >

@@ -1,5 +1,4 @@
 import React from "react";
-import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
 import { IChart } from "../src/types";
 import { Patterns } from "../src/lib/patterns";
@@ -34,7 +33,7 @@ const datasets = [
 ];
 
 export const Default = () => {
-  const dataVizProps: IChart = new LineStackedChart({
+  const config: IChart = new LineStackedChart({
     areaLabel: "Stacked line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
@@ -43,7 +42,7 @@ export const Default = () => {
   });
   return (
     <Container>
-      <Chart {...object("Configuration", dataVizProps, "Default")} />
+      <Chart {...config} />
     </Container>
   );
 };
@@ -67,7 +66,7 @@ const datasetsHighContrast = [
 ];
 
 export const HighContrast = () => {
-  const dataVizProps: IChart = new LineStackedChartHighContrast({
+  const config: IChart = new LineStackedChartHighContrast({
     areaLabel: "Stacked line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
@@ -76,7 +75,7 @@ export const HighContrast = () => {
   });
   return (
     <HighContrastContainer>
-      <Chart {...object("Configuration", dataVizProps, "Default")} />
+      <Chart {...config} />
     </HighContrastContainer>
   );
 };
@@ -100,7 +99,7 @@ const datasetsCustomTheme = [
 ];
 
 export const CustomTheme = () => {
-  const dataVizProps: IChart = new LineStackedChart({
+  const config: IChart = new LineStackedChart({
     areaLabel: "Stacked line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
@@ -110,7 +109,7 @@ export const CustomTheme = () => {
   });
   return (
     <DarkContainer>
-      <Chart {...object("Configuration", dataVizProps, "Custom Theme")} />
+      <Chart {...config} />
     </DarkContainer>
   );
 };

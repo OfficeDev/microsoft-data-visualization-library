@@ -1,5 +1,4 @@
 import React from "react";
-import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
 import { IChart, Point } from "../src/types";
 import { AreaChart, AreaChartHighContrast } from "../src/lib/builder";
@@ -25,7 +24,7 @@ const datasets = [
 ];
 
 export const Default = () => {
-  const dataVizProps: IChart = new AreaChart({
+  const config: IChart = new AreaChart({
     areaLabel: "Line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
@@ -34,7 +33,7 @@ export const Default = () => {
   });
   return (
     <Container>
-      <Chart {...object("Configuration", dataVizProps, "Default")} />
+      <Chart {...config} />
     </Container>
   );
 };
@@ -55,7 +54,7 @@ const datasetsHighContrast = [
 ];
 
 export const HighContrast = () => {
-  const dataVizProps: IChart = new AreaChartHighContrast({
+  const config: IChart = new AreaChartHighContrast({
     areaLabel: "Line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
@@ -64,7 +63,7 @@ export const HighContrast = () => {
   });
   return (
     <HighContrastContainer>
-      <Chart {...object("Configuration", dataVizProps, "HighContrast")} />
+      <Chart {...config} />
     </HighContrastContainer>
   );
 };
@@ -83,7 +82,7 @@ const datasetsCustomTheme = [
 ];
 
 export const CustomTheme = () => {
-  const dataVizProps: IChart = new AreaChart({
+  const config: IChart = new AreaChart({
     areaLabel: "Line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
@@ -93,7 +92,7 @@ export const CustomTheme = () => {
   });
   return (
     <DarkContainer>
-      <Chart {...object("Configuration", dataVizProps, "Custom Theme")} />
+      <Chart {...config} />
     </DarkContainer>
   );
 };

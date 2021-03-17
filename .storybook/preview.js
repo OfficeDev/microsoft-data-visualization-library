@@ -1,4 +1,4 @@
-import { withKnobs } from "@storybook/addon-knobs";
+// import { withKnobs } from "@storybook/addon-knobs";
 import { withA11y } from "@storybook/addon-a11y";
 import { withStorybookTheme } from "../src/lib/storybook";
 
@@ -22,6 +22,10 @@ export const parameters = {
   },
   // Remove an additional padding in canvas body (Added in v.6)
   layout: "fullscreen",
+  docs: {
+    page: null,
+    inlineStories: false,
+  },
 };
 
-export const decorators = [withKnobs, withA11y, withStorybookTheme];
+export const decorators = [withA11y, withStorybookTheme];
