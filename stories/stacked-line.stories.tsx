@@ -1,15 +1,13 @@
 import React from "react";
 import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
-import { Container, DarkContainer, HighContrastContainer } from "./components";
-import { ChartTypes, IChart } from "../src/types";
+import { IChart } from "../src/types";
+import { Patterns } from "../src/lib/patterns";
 import {
-  LineStackedDataSetHCStyle,
-  LineStackedDataSetStyle,
-  Patterns,
-} from "../src/lib/datasets";
-import { highContrastOptions, stackedLineOptions } from "../src/lib/settings";
-import { deepMerge } from "../src/lib/utils";
+  LineStackedChart,
+  LineStackedChartHighContrast,
+} from "../src/lib/builder";
+import { Container, DarkContainer, HighContrastContainer } from "./components";
 import { customOptions } from "./utils";
 
 export default {
@@ -36,15 +34,13 @@ const datasets = [
 ];
 
 export const Default = () => {
-  const dataVizProps: IChart = {
-    type: ChartTypes.Line,
+  const dataVizProps: IChart = new LineStackedChart({
     areaLabel: "Stacked line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(datasets, (set) => new LineStackedDataSetStyle(set)),
+      datasets,
     },
-    options: stackedLineOptions,
-  };
+  });
   return (
     <Container>
       <Chart {...object("Configuration", dataVizProps, "Default")} />
@@ -71,18 +67,13 @@ const datasetsHighContrast = [
 ];
 
 export const HighContrast = () => {
-  const dataVizProps: IChart = {
-    type: ChartTypes.Line,
+  const dataVizProps: IChart = new LineStackedChartHighContrast({
     areaLabel: "Stacked line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(
-        datasetsHighContrast,
-        (set) => new LineStackedDataSetHCStyle(set)
-      ),
+      datasets: datasetsHighContrast,
     },
-    options: deepMerge(highContrastOptions, stackedLineOptions),
-  };
+  });
   return (
     <HighContrastContainer>
       <Chart {...object("Configuration", dataVizProps, "Default")} />
@@ -109,18 +100,14 @@ const datasetsCustomTheme = [
 ];
 
 export const CustomTheme = () => {
-  const dataVizProps: IChart = {
-    type: ChartTypes.Line,
+  const dataVizProps: IChart = new LineStackedChart({
     areaLabel: "Stacked line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(
-        datasetsCustomTheme,
-        (set) => new LineStackedDataSetStyle(set)
-      ),
+      datasets: datasetsCustomTheme,
     },
-    options: deepMerge(stackedLineOptions, customOptions),
-  };
+    options: customOptions,
+  });
   return (
     <DarkContainer>
       <Chart {...object("Configuration", dataVizProps, "Custom Theme")} />

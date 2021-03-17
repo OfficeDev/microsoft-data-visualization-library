@@ -2,6 +2,25 @@ import { ChartDataSets } from "chart.js";
 import { HighContrastColors, IChartOptions } from "../types";
 import { usNumberFormat, shortTicks } from "./utils";
 
+const stackedTooltipTitle = (
+  item: Chart.ChartTooltipItem[],
+  data: Chart.ChartData
+): string => {
+  let total = 0;
+  if (!item) return "";
+  if (!data) return "";
+  if (!data.datasets) return "";
+  data.datasets.map((dataset: ChartDataSets) => {
+    const value = dataset!.data![item[0].index!];
+    if (typeof value === "number") {
+      return (total += value);
+    }
+  });
+  return `${((Number(item[0].yLabel) / total) * 100).toPrecision(
+    2
+  )}% (${usNumberFormat(Number(item[0].yLabel))})`;
+};
+
 export const defaultOptions: IChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -173,24 +192,7 @@ export const stackedLineOptions: Chart.ChartOptions = {
   },
   tooltips: {
     callbacks: {
-      title: (
-        item: Chart.ChartTooltipItem[],
-        data: Chart.ChartData
-      ): string => {
-        let total = 0;
-        if (!item) return "";
-        if (!data) return "";
-        if (!data.datasets) return "";
-        data.datasets.map((dataset: ChartDataSets) => {
-          const value = dataset!.data![item[0].index!];
-          if (typeof value === "number") {
-            return (total += value);
-          }
-        });
-        return `${((Number(item[0].yLabel) / total) * 100).toPrecision(
-          2
-        )}% (${usNumberFormat(Number(item[0].yLabel))})`;
-      },
+      title: stackedTooltipTitle,
       labelColor: (tooltipItem: any, chart: any) => {
         return {
           borderColor: "transparent",
@@ -216,5 +218,81 @@ export const barOptions: Chart.ChartOptions = {
         },
       },
     ],
+  },
+};
+
+export const groupedBarOptions: Chart.ChartOptions = {
+  scales: {
+    xAxes: [
+      {
+        gridLines: {
+          offsetGridLines: true,
+        },
+      },
+    ],
+  },
+};
+
+export const stackedBarOptions: Chart.ChartOptions = {
+  hover: {
+    mode: "nearest",
+    intersect: false,
+  },
+  scales: {
+    xAxes: [
+      {
+        stacked: true,
+        gridLines: {
+          offsetGridLines: false,
+        },
+      },
+    ],
+    yAxes: [{ stacked: true }],
+  },
+  tooltips: {
+    callbacks: {
+      title: stackedTooltipTitle,
+    },
+  },
+};
+
+export const horizontalBarOptions: Chart.ChartOptions = {
+  layout: {
+    padding: {
+      top: -6,
+      left: -32,
+    },
+  },
+  hover: {
+    mode: "index",
+    intersect: false,
+  },
+  scales: {
+    xAxes: [
+      {
+        ticks: {
+          display: false,
+        },
+        gridLines: {
+          display: false,
+        },
+      },
+    ],
+    yAxes: [
+      {
+        ticks: {
+          mirror: true,
+          padding: 0,
+          callback: (v: string) => v,
+          labelOffset: 26,
+        },
+        gridLines: {
+          display: false,
+        },
+      },
+    ],
+  },
+  tooltips: {
+    position: "nearest",
   },
 };

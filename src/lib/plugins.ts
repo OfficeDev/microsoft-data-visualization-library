@@ -452,12 +452,12 @@ export const tooltipAxisXLine = ({ chart, ctx, tooltip }: any) => {
   }
 };
 
-export const horizontalBarValue = ({ chart, ctx, stacked }: any) => {
+export const horizontalBarValue = ({ chart, ctx, config }: any) => {
   ctx.font = "bold 11px Segoe UI";
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
-  ctx.fillStyle = chart.options.defaultColor;
-  if (stacked) {
+  ctx.fillStyle = config.options.scales.xAxes[0].ticks.fontColor;
+  if (config.options.scales.yAxes[0].stacked) {
     const meta = chart.controller.getDatasetMeta(
       chart.data.datasets.length - 1
     );
@@ -480,4 +480,20 @@ export const horizontalBarValue = ({ chart, ctx, stacked }: any) => {
       });
     });
   }
+};
+
+export const horizontalBarAxisYLabels = (chartInstance: Chart) => {
+  const { config, chartArea } = chartInstance;
+  const { options, data } = config;
+
+  if (!options) return;
+  if (!chartArea) return;
+  if (!options.scales) return;
+  if (!options.scales.yAxes) return;
+  if (!options.scales.yAxes[0]) return;
+  if (!options.scales.yAxes[0].ticks) return;
+
+  options.scales.yAxes[0].ticks.labelOffset =
+    chartArea.bottom / data!.datasets![0]!.data!.length / 2 - 10;
+  chartInstance.update();
 };

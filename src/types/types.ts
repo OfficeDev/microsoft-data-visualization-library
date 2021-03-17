@@ -37,6 +37,7 @@ export interface IChartDataSet {
 export enum ChartTypes {
   Line = "line",
   Bar = "bar",
+  HorizontalBar = "horizontalBar",
   Pie = "pie",
   Doughnut = "doughnut",
   Bubble = "bubble",

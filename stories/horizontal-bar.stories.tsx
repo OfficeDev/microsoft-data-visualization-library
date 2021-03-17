@@ -3,12 +3,16 @@ import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
 import { IChart } from "../src/types";
 import { Patterns } from "../src/lib/patterns";
-import { BarChart, BarChartHighContrast } from "../src/lib/builder";
+import {
+  BarChart,
+  BarChartHighContrast,
+  HorizontalBarChart,
+} from "../src/lib/builder";
 import { Container, DarkContainer, HighContrastContainer } from "./components";
 import { customOptions } from "./utils";
 
 export default {
-  title: "Charts/Bar",
+  title: "Charts/Horizontal bar",
   component: Chart,
 };
 
@@ -21,8 +25,8 @@ const datasets = [
 ];
 
 export const Default = () => {
-  const dataVizProps: IChart = new BarChart({
-    areaLabel: "Bar chart sample",
+  const dataVizProps: IChart = new HorizontalBarChart({
+    areaLabel: "Horizontal bar chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets,

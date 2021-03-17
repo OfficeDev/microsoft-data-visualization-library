@@ -1,13 +1,10 @@
 import React from "react";
 import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
-import { Container, DarkContainer, HighContrastContainer } from "./components";
-import { ChartTypes, IChart, Point } from "../src/types";
-import { LineDataSetHCStyle, LineDataSetStyle } from "../src/lib/datasets";
-import { ChartDataSets } from "chart.js";
-import { gradientPlugin } from "../src/lib/plugins";
-import { highContrastOptions } from "../src/lib/settings";
+import { IChart, Point } from "../src/types";
+import { AreaChart, AreaChartHighContrast } from "../src/lib/builder";
 import { customOptions } from "./utils";
+import { Container, DarkContainer, HighContrastContainer } from "./components";
 
 export default {
   title: "Charts/Area",
@@ -28,22 +25,13 @@ const datasets = [
 ];
 
 export const Default = () => {
-  const dataVizProps: IChart = {
-    type: ChartTypes.Line,
-    areaLabel: "Area chart sample",
+  const dataVizProps: IChart = new AreaChart({
+    areaLabel: "Line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(
-        datasets,
-        (set: ChartDataSets) => new LineDataSetStyle(set)
-      ),
+      datasets,
     },
-    plugins: [
-      {
-        afterLayout: gradientPlugin,
-      },
-    ],
-  };
+  });
   return (
     <Container>
       <Chart {...object("Configuration", dataVizProps, "Default")} />
@@ -67,23 +55,13 @@ const datasetsHighContrast = [
 ];
 
 export const HighContrast = () => {
-  const dataVizProps: IChart = {
-    type: ChartTypes.Line,
-    areaLabel: "Area chart sample",
+  const dataVizProps: IChart = new AreaChartHighContrast({
+    areaLabel: "Line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(
-        datasetsHighContrast,
-        (set) => new LineDataSetHCStyle(set)
-      ),
+      datasets: datasetsHighContrast,
     },
-    options: highContrastOptions,
-    plugins: [
-      {
-        afterLayout: gradientPlugin,
-      },
-    ],
-  };
+  });
   return (
     <HighContrastContainer>
       <Chart {...object("Configuration", dataVizProps, "HighContrast")} />
@@ -105,23 +83,14 @@ const datasetsCustomTheme = [
 ];
 
 export const CustomTheme = () => {
-  const dataVizProps: IChart = {
-    type: ChartTypes.Line,
-    areaLabel: "Area chart sample",
+  const dataVizProps: IChart = new AreaChart({
+    areaLabel: "Line chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(
-        datasetsCustomTheme,
-        (set) => new LineDataSetStyle(set)
-      ),
+      datasets: datasetsCustomTheme,
     },
     options: customOptions,
-    plugins: [
-      {
-        afterLayout: gradientPlugin,
-      },
-    ],
-  };
+  });
   return (
     <DarkContainer>
       <Chart {...object("Configuration", dataVizProps, "Custom Theme")} />

@@ -216,6 +216,27 @@ export class BarDataSetStyle extends Entity implements ChartDataSets {
   }
 }
 
+export class HorizontalBarDataSetStyle extends Entity implements ChartDataSets {
+  backgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  barPercentage?: number;
+  borderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  borderWidth?: BorderWidth | BorderWidth[] | Scriptable<BorderWidth>;
+  color?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  hoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  hoverBorderWidth?: number | number[] | Scriptable<number>;
+
+  constructor(fields: HorizontalBarDataSetStyle) {
+    super(fields);
+    this.borderWidth = fields.borderWidth || 0;
+    this.barPercentage = fields.barPercentage || 0.5;
+    this.backgroundColor =
+      fields.backgroundColor || fields.color || "rgba(0,0,0,.1)";
+    this.hoverBorderWidth = fields.hoverBorderWidth || 0;
+    this.hoverBackgroundColor =
+      fields.hoverBackgroundColor || fields.color || "rgba(0,0,0,.1)";
+  }
+}
+
 export class BarDataSetHCStyle extends BarDataSetStyle {
   hoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   pattern: IDraw;
@@ -243,30 +264,3 @@ export class BarDataSetHCStyle extends BarDataSetStyle {
     this.hoverBorderColor = HighContrastColors.Active;
   }
 }
-
-export const Patterns = {
-  Square: {
-    shape: Shapes.Square,
-    size: 10,
-  },
-  Diagonal: {
-    shape: Shapes.DiagonalRightLeft,
-    size: 5,
-  },
-  Diagonal2: {
-    shape: Shapes.Diagonal,
-    size: 5,
-  },
-  Grid: {
-    shape: Shapes.Grid,
-    size: 10,
-  },
-  Grid2: {
-    shape: Shapes.GridRightLeft,
-    size: 3,
-  },
-  Line: {
-    shape: Shapes.VerticalLine,
-    size: 10,
-  },
-};

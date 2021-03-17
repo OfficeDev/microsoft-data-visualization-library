@@ -1,10 +1,14 @@
 import React from "react";
 import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
-import { Container } from "./components";
-import { ChartTypes, IChart } from "../src/types";
-import { BarDataSetStyle } from "../src/lib/datasets";
-import { barOptions } from "../src/lib/settings";
+import { IChart } from "../src/types";
+import { Patterns } from "../src/lib/patterns";
+import {
+  StackedBarChart,
+  StackedBarChartHighContrast,
+} from "../src/lib/builder";
+import { Container, DarkContainer, HighContrastContainer } from "./components";
+import { customOptions } from "./utils";
 
 export default {
   title: "Charts/Stacked bar",
@@ -15,25 +19,23 @@ const datasets = [
   {
     label: "Laptops",
     data: [1860, 7700, 4100, 3012, 2930],
-    color: "",
+    color: "#585A96",
   },
   {
     label: "Watches",
     data: [1200, 3600, 2480, 5049, 4596],
-    color: "",
+    color: "#BDBDE6",
   },
 ];
 
 export const Default = () => {
-  const dataVizProps: IChart = {
-    type: ChartTypes.Bar,
-    areaLabel: "Bar chart sample",
+  const dataVizProps: IChart = new StackedBarChart({
+    areaLabel: "Stacked bar chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
-      datasets: Array.from(datasets, (set) => new BarDataSetStyle(set)),
+      datasets,
     },
-    options: barOptions,
-  };
+  });
   return (
     <Container>
       <Chart {...object("Configuration", dataVizProps, "Default")} />
@@ -41,40 +43,64 @@ export const Default = () => {
   );
 };
 
-// const datasetsHighContrast = [
-//   {
-//     label: "Tablets",
-//     data: [860, 6700, 3100, 2012, 1930],
-//     pattern: Patterns.LineStacked.Square,
-//   },
-//   {
-//     label: "Phones",
-//     data: [100, 1600, 180, 3049, 3596],
-//     pattern: Patterns.LineStacked.Diagonal,
-//   },
-//   {
-//     label: "Laptops",
-//     data: [1860, 7700, 4100, 3012, 2930],
-//     pattern: Patterns.LineStacked.Grid,
-//   },
-// ];
+const datasetsHighContrast = [
+  {
+    label: "Tablets",
+    data: [860, 6700, 3100, 2012, 1930],
+    pattern: Patterns.Square,
+  },
+  {
+    label: "Phones",
+    data: [100, 1600, 180, 3049, 3596],
+    pattern: Patterns.Diagonal,
+  },
+  {
+    label: "Laptops",
+    data: [1860, 7700, 4100, 3012, 2930],
+    pattern: Patterns.Grid,
+  },
+];
 
-// export const HighContrast = () => {
-//   const dataVizProps: IChart = {
-//     type: ChartTypes.Line,
-//     areaLabel: "Line chart sample",
-//     data: {
-//       labels: ["Jan", "Feb", "March", "April", "May"],
-//       datasets: Array.from(
-//         datasetsHighContrast,
-//         (set) => new LineStackedChartDataSetHCStyle(set)
-//       ),
-//     },
-//     options: deepMerge(highContrastChartOptions, stackedLineChartOptions),
-//   };
-//   return (
-//     <HighContrastContainer>
-//       <Chart {...object("Configuration", dataVizProps, "Default")} />
-//     </HighContrastContainer>
-//   );
-// };
+export const HighContrast = () => {
+  const dataVizProps: IChart = new StackedBarChartHighContrast({
+    areaLabel: "Stacked bar chart sample",
+    data: {
+      labels: ["Jan", "Feb", "March", "April", "May"],
+      datasets: datasetsHighContrast,
+    },
+  });
+  return (
+    <HighContrastContainer>
+      <Chart {...object("Configuration", dataVizProps, "Default")} />
+    </HighContrastContainer>
+  );
+};
+
+const datasetsCustomTheme = [
+  {
+    label: "Tablets",
+    data: [860, 6700, 3100, 2012, 1930],
+    color: "rgb(255, 99, 132)",
+  },
+  {
+    label: "Watches",
+    data: [1200, 3600, 2480, 5049, 4596],
+    color: "rgb(255, 159, 64)",
+  },
+];
+
+export const CustomTheme = () => {
+  const dataVizProps: IChart = new StackedBarChart({
+    areaLabel: "Stacked bar chart sample",
+    data: {
+      labels: ["Jan", "Feb", "March", "April", "May"],
+      datasets: datasetsCustomTheme,
+    },
+    options: customOptions,
+  });
+  return (
+    <DarkContainer>
+      <Chart {...object("Configuration", dataVizProps, "Default")} />
+    </DarkContainer>
+  );
+};

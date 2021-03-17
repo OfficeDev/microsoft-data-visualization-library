@@ -5,6 +5,33 @@ const PATTERN_COLOR = "rgba(0, 0, 0, 0.8)";
 const POINT_STYLE = "round";
 const SIZE = 20;
 
+export const Patterns = {
+  Square: {
+    shape: Shapes.Square,
+    size: 10,
+  },
+  Diagonal: {
+    shape: Shapes.DiagonalRightLeft,
+    size: 5,
+  },
+  Diagonal2: {
+    shape: Shapes.Diagonal,
+    size: 5,
+  },
+  Grid: {
+    shape: Shapes.Grid,
+    size: 10,
+  },
+  Grid2: {
+    shape: Shapes.GridRightLeft,
+    size: 3,
+  },
+  Line: {
+    shape: Shapes.VerticalLine,
+    size: 10,
+  },
+};
+
 // export const legendLabels = ({
 //   canvasRef,
 //   theme,

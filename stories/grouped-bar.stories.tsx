@@ -1,13 +1,17 @@
 import React from "react";
 import { object } from "@storybook/addon-knobs";
 import { Chart } from "../src/chart";
-import { IChart, Point } from "../src/types";
-import { LineChart, LineChartHighContrast } from "../src/lib/builder";
+import { IChart } from "../src/types";
+import { Patterns } from "../src/lib/patterns";
+import {
+  GroupedBarChartHighContrast,
+  GroupedBarChart,
+} from "../src/lib/builder";
 import { Container, DarkContainer, HighContrastContainer } from "./components";
 import { customOptions } from "./utils";
 
 export default {
-  title: "Charts/Line",
+  title: "Charts/Grouped bar",
   component: Chart,
 };
 
@@ -32,21 +36,21 @@ const datasets = [
     data: [200, 3600, 480, 5049, 4596],
     color: "#605E5C",
   },
-  {
-    label: "TVs",
-    data: [960, 8700, 5100, 5012, 3930],
-    color: "#464775",
-  },
-  {
-    label: "Displays",
-    data: [1000, 4600, 480, 4049, 3596],
-    color: "#252423",
-  },
+  // {
+  //   label: "TVs",
+  //   data: [960, 8700, 5100, 5012, 3930],
+  //   color: "#464775",
+  // },
+  // {
+  //   label: "Displays",
+  //   data: [1000, 4600, 480, 4049, 3596],
+  //   color: "#252423",
+  // },
 ];
 
 export const Default = () => {
-  const dataVizProps: IChart = new LineChart({
-    areaLabel: "Line chart sample",
+  const dataVizProps: IChart = new GroupedBarChart({
+    areaLabel: "Grouped bar chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets,
@@ -63,44 +67,38 @@ const datasetsHighContrast = [
   {
     label: "Tablets",
     data: [860, 6700, 3100, 2012, 1930],
-    borderDash: [],
-    pointStyle: Point.Circle,
+    pattern: Patterns.Diagonal,
   },
   {
     label: "Phones",
     data: [100, 1600, 180, 3049, 3596],
-    borderDash: [],
-    pointStyle: Point.Rectangle,
+    pattern: Patterns.Square,
   },
   {
     label: "Laptops",
     data: [1860, 7700, 4100, 3012, 2930],
-    borderDash: [],
-    pointStyle: Point.Triangle,
+    pattern: Patterns.Grid2,
   },
   {
     label: "Watches",
     data: [200, 3600, 480, 5049, 4596],
-    borderDash: [5, 5],
-    pointStyle: Point.Circle,
+    pattern: Patterns.Grid,
   },
-  {
-    label: "TVs",
-    data: [960, 8700, 5100, 5012, 3930],
-    borderDash: [5, 5],
-    pointStyle: Point.Rectangle,
-  },
-  {
-    label: "Displays",
-    data: [1000, 4600, 480, 4049, 3596],
-    borderDash: [5, 5],
-    pointStyle: Point.Triangle,
-  },
+  // {
+  //   label: "TVs",
+  //   data: [960, 8700, 5100, 5012, 3930],
+  //   pattern: Patterns.Grid2,
+  // },
+  // {
+  //   label: "Displays",
+  //   data: [1000, 4600, 480, 4049, 3596],
+  //   pattern: Patterns.Line,
+  // },
 ];
 
 export const HighContrast = () => {
-  const dataVizProps: IChart = new LineChartHighContrast({
-    areaLabel: "Line chart sample",
+  const dataVizProps: IChart = new GroupedBarChartHighContrast({
+    areaLabel: "Grouped bar chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets: datasetsHighContrast,
@@ -108,7 +106,7 @@ export const HighContrast = () => {
   });
   return (
     <HighContrastContainer>
-      <Chart {...object("Configuration", dataVizProps, "HighContrast")} />
+      <Chart {...object("Configuration", dataVizProps, "Default")} />
     </HighContrastContainer>
   );
 };
@@ -134,21 +132,11 @@ const datasetsCustomTheme = [
     data: [200, 3600, 480, 5049, 4596],
     color: "rgb(75, 192, 192)",
   },
-  {
-    label: "TVs",
-    data: [960, 8700, 5100, 5012, 3930],
-    color: "rgb(54, 162, 235)",
-  },
-  {
-    label: "Displays",
-    data: [1000, 4600, 480, 4049, 3596],
-    color: "rgb(153, 102, 255)",
-  },
 ];
 
 export const CustomTheme = () => {
-  const dataVizProps: IChart = new LineChart({
-    areaLabel: "Line chart sample",
+  const dataVizProps: IChart = new GroupedBarChart({
+    areaLabel: "Grouped bar chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets: datasetsCustomTheme,
@@ -157,7 +145,7 @@ export const CustomTheme = () => {
   });
   return (
     <DarkContainer>
-      <Chart {...object("Configuration", dataVizProps, "Custom Theme")} />
+      <Chart {...object("Configuration", dataVizProps, "Default")} />
     </DarkContainer>
   );
 };
