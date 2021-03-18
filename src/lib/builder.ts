@@ -93,7 +93,7 @@ export class LineChart extends ChartBuilder {
     );
 
     this.plugins.push({
-      afterDraw: highLightDataOnHover,
+      beforeDatasetsDraw: highLightDataOnHover,
     });
   }
 }
@@ -117,7 +117,7 @@ export class BarChart extends ChartBuilder {
     }
 
     this.plugins.push({
-      afterDraw: highLightDataOnHover,
+      beforeDatasetsDraw: highLightDataOnHover,
     });
   }
 }
@@ -189,7 +189,7 @@ export class StackedBarChart extends ChartBuilder {
     }
 
     this.plugins.push({
-      afterDraw: highLightDataOnHover,
+      beforeDatasetsDraw: highLightDataOnHover,
     });
   }
 }
@@ -252,7 +252,7 @@ export class LineStackedChart extends ChartBuilder {
     }
 
     this.plugins.push({
-      afterDraw: highLightDataOnHover,
+      beforeDatasetsDraw: highLightDataOnHover,
     });
   }
 }
@@ -310,7 +310,7 @@ export class StackedBarChartHighContrast extends ChartBuilder {
     }
 
     this.plugins.push({
-      afterDraw: highLightDataOnHover,
+      beforeDatasetsDraw: highLightDataOnHover,
     });
   }
 }
@@ -334,7 +334,7 @@ export class LineStackedChartHighContrast extends ChartBuilder {
     }
 
     this.plugins.push({
-      afterDraw: highLightDataOnHover,
+      beforeDatasetsDraw: highLightDataOnHover,
     });
   }
 }
@@ -402,7 +402,7 @@ export class LineChartHighContrast extends ChartBuilder {
     }
 
     this.plugins.push({
-      afterDraw: highLightDataOnHover,
+      beforeDatasetsDraw: highLightDataOnHover,
     });
   }
 }
@@ -416,7 +416,7 @@ export class AreaChartHighContrast extends LineChartHighContrast {
     });
 
     this.plugins.push({
-      afterDraw: highLightDataOnHover,
+      beforeDatasetsDraw: highLightDataOnHover,
     });
   }
 }
@@ -441,7 +441,7 @@ export class BarChartHighContrast extends ChartBuilder {
     }
 
     this.plugins.push({
-      afterDraw: highLightDataOnHover,
+      beforeDatasetsDraw: highLightDataOnHover,
     });
   }
 }

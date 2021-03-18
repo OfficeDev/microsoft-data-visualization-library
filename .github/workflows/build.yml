@@ -1,0 +1,31 @@
+name: Build & Host
+
+on: push
+defaults:
+  run:
+    shell: bash # Run everything using bash
+
+jobs:
+  build:
+    name: Build
+    runs-on: macos-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Setup NodeJS 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      - name: Set up build environment
+        run: |
+          yarn
+      - name: Build app
+        run: |
+          yarn build:storybook
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist-storybook

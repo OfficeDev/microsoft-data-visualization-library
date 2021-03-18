@@ -226,6 +226,7 @@ export class PieDataSetStyle extends Entity implements ChartDataSets {
   color?: ChartColor[];
   hoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   hoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  borderSkipped?: PositionType | PositionType[] | Scriptable<PositionType>;
 
   constructor(fields: PieDataSetStyle) {
     super(fields);
@@ -236,6 +237,7 @@ export class PieDataSetStyle extends Entity implements ChartDataSets {
       fields.backgroundColor || fields.color || "rgba(0,0,0,.1)";
     this.hoverBackgroundColor =
       fields.hoverBackgroundColor || fields.color || "rgba(0,0,0,.1)";
+    this.borderSkipped = fields.borderSkipped || (false as any);
   }
 }
 
@@ -308,9 +310,8 @@ export class PieDataSetHCStyle extends PieDataSetStyle {
       },
     ];
     this.borderWidth = fields.borderWidth || 3;
-    this.borderColor = fields.borderColor || HighContrastColors.Background;
-    this.hoverBorderColor =
-      fields.hoverBorderColor || HighContrastColors.Background;
+    this.borderColor = HighContrastColors.Foreground;
+    this.hoverBorderColor = HighContrastColors.Active;
     this.backgroundColor = Array.from(
       fields.pattern,
       (pat) =>
