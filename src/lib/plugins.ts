@@ -62,7 +62,9 @@ export const gradientPlugin = (chartInstance: Chart) => {
   });
 };
 
-export const highLightDataOnHover = ({ chart, ctx, tooltip }: any) => {
+export const highLightDataOnHover = (chartInstance: any) => {
+  const { chart, ctx, tooltip, config } = chartInstance;
+
   if (tooltip._active && tooltip._active.length) {
     const activePoint = tooltip._active[0],
       y = activePoint.tooltipPosition().y,
@@ -74,13 +76,13 @@ export const highLightDataOnHover = ({ chart, ctx, tooltip }: any) => {
       topY = y_axis.top,
       bottomY = y_axis.bottom;
 
-    switch (chart.type) {
+    switch (config.type) {
       case ChartTypes.Line:
         ctx.save();
         // Line
         ctx.beginPath();
-        ctx.moveTo(x, topY);
-        ctx.lineTo(x, bottomY);
+        ctx.moveTo(leftX - 44, y);
+        ctx.lineTo(rightX, y);
         ctx.setLineDash([5, 5]);
         ctx.lineWidth = 1;
         ctx.strokeStyle = chart.options.scales.yAxes[0].gridLines.color;

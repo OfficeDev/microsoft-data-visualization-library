@@ -229,7 +229,7 @@ export class AreaChart extends LineChart {
       afterLayout: gradientPlugin,
     });
     this.plugins.push({
-      afterDraw: highLightDataOnHover,
+      beforeDatasetDraw: highLightDataOnHover,
     });
   }
 }
