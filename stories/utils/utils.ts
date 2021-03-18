@@ -41,3 +41,37 @@ export const customOptions = {
     ],
   },
 };
+
+export const customPieOptions = {
+  defaultColor: "#605E5C",
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          fontColor: "#979593",
+          maxTicksLimit: 8,
+        },
+        gridLines: {
+          color: "#484644",
+          zeroLineColor: "#484644",
+        },
+        scaleLabel: {
+          display: true,
+        },
+      },
+    ],
+    xAxes: [
+      {
+        ticks: {
+          fontColor: "#979593",
+        },
+        gridLines: {
+          color: "#484644",
+        },
+        scaleLabel: {
+          display: true,
+        },
+      },
+    ],
+  },
+};

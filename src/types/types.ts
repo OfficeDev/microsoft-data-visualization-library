@@ -100,7 +100,7 @@ export interface LineHighContrastChartDataSets extends ChartDataSets {
 }
 
 export interface HighContrastChartDataSets extends ChartDataSets {
-  pattern: IDraw;
+  pattern: IDraw | IDraw[];
 }
 
 export interface IChartConfig {

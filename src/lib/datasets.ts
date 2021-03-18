@@ -219,6 +219,32 @@ export class BarDataSetStyle extends Entity implements ChartDataSets {
   }
 }
 
+export class PieDataSetStyle extends Entity implements ChartDataSets {
+  backgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  borderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  borderWidth?: BorderWidth | BorderWidth[] | Scriptable<BorderWidth>;
+  color?: ChartColor[];
+  hoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  hoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+
+  constructor(fields: PieDataSetStyle) {
+    super(fields);
+    this.borderWidth = fields.borderWidth || 2;
+    this.borderColor = fields.borderColor || "#fff";
+    this.hoverBorderColor = fields.hoverBorderColor || "#fff";
+    this.backgroundColor =
+      fields.backgroundColor || fields.color || "rgba(0,0,0,.1)";
+    this.hoverBackgroundColor =
+      fields.hoverBackgroundColor || fields.color || "rgba(0,0,0,.1)";
+  }
+}
+
+export class DoughnutDataSetStyle extends PieDataSetStyle {
+  constructor(fields: DoughnutDataSetStyle) {
+    super(fields);
+  }
+}
+
 export class HorizontalBarDataSetStyle extends Entity implements ChartDataSets {
   backgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   barPercentage?: number;
@@ -227,6 +253,7 @@ export class HorizontalBarDataSetStyle extends Entity implements ChartDataSets {
   color?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   hoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   hoverBorderWidth?: number | number[] | Scriptable<number>;
+  borderSkipped?: PositionType | PositionType[] | Scriptable<PositionType>;
 
   constructor(fields: HorizontalBarDataSetStyle) {
     super(fields);
@@ -237,6 +264,77 @@ export class HorizontalBarDataSetStyle extends Entity implements ChartDataSets {
     this.hoverBorderWidth = fields.hoverBorderWidth || 0;
     this.hoverBackgroundColor =
       fields.hoverBackgroundColor || fields.color || "rgba(0,0,0,.1)";
+    this.borderSkipped = fields.borderSkipped || (false as any);
+  }
+}
+
+export class HorizontalBarDataSetHCStyle extends HorizontalBarDataSetStyle {
+  hoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  pattern: IDraw;
+
+  constructor(fields: BarDataSetHCStyle) {
+    super(fields);
+    this.pattern = fields.pattern || {
+      shape: Shapes.Square,
+      size: 10,
+    };
+    this.backgroundColor = buildPattern({
+      backgroundColor: HighContrastColors.Background,
+      patternColor: HighContrastColors.Foreground,
+      ...this.pattern,
+    }) as any;
+    this.hoverBackgroundColor = buildPattern({
+      backgroundColor: HighContrastColors.Background,
+      patternColor: HighContrastColors.Active,
+      ...this.pattern,
+    }) as any;
+
+    this.borderWidth = fields.borderWidth || 1;
+    this.borderColor = HighContrastColors.Foreground;
+    this.hoverBorderWidth = fields.hoverBorderWidth || 3;
+    this.hoverBorderColor = HighContrastColors.Active;
+  }
+}
+
+export class PieDataSetHCStyle extends PieDataSetStyle {
+  pattern: IDraw[];
+
+  constructor(fields: PieDataSetHCStyle) {
+    super(fields);
+    this.pattern = fields.pattern || [
+      {
+        shape: Shapes.Square,
+        size: 10,
+      },
+    ];
+    this.borderWidth = fields.borderWidth || 3;
+    this.borderColor = fields.borderColor || HighContrastColors.Background;
+    this.hoverBorderColor =
+      fields.hoverBorderColor || HighContrastColors.Background;
+    this.backgroundColor = Array.from(
+      fields.pattern,
+      (pat) =>
+        buildPattern({
+          backgroundColor: HighContrastColors.Background,
+          patternColor: HighContrastColors.Foreground,
+          ...pat,
+        }) as any
+    );
+    this.hoverBackgroundColor = Array.from(
+      fields.pattern,
+      (pat) =>
+        buildPattern({
+          backgroundColor: HighContrastColors.Background,
+          patternColor: HighContrastColors.Active,
+          ...pat,
+        }) as any
+    );
+  }
+}
+
+export class DoughnutDataSetHCStyle extends PieDataSetHCStyle {
+  constructor(fields: PieDataSetHCStyle) {
+    super(fields);
   }
 }
 

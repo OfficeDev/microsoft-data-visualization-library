@@ -221,6 +221,62 @@ export const barOptions: Chart.ChartOptions = {
   },
 };
 
+export const pieOptions: Chart.ChartOptions = {
+  layout: {
+    padding: {
+      top: 32,
+      right: 32,
+      bottom: 32,
+      left: -16,
+    },
+  },
+  hover: {
+    mode: "point",
+    intersect: false,
+  },
+  scales: {
+    xAxes: [
+      {
+        ticks: {
+          display: false,
+        },
+        gridLines: {
+          display: false,
+        },
+      },
+    ],
+    yAxes: [
+      {
+        ticks: {
+          display: false,
+        },
+        gridLines: {
+          display: false,
+        },
+      },
+    ],
+  },
+  tooltips: {
+    callbacks: {
+      title: (tooltipItems: any, data: any) => {
+        return `${(
+          (Number(data.datasets[0].data[tooltipItems[0].index]) /
+            (data.datasets[0].data as number[]).reduce((a, b) => a + b)) *
+          100
+        ).toPrecision(2)}% (${usNumberFormat(
+          Number(data.datasets[0].data[tooltipItems[0].index])
+        )})`;
+      },
+      label: (tooltipItem: any, data: any) => data.labels[tooltipItem.index],
+    },
+  },
+};
+
+export const doughnutOptions: Chart.ChartOptions = {
+  cutoutPercentage: 70,
+  ...pieOptions,
+};
+
 export const groupedBarOptions: Chart.ChartOptions = {
   scales: {
     xAxes: [

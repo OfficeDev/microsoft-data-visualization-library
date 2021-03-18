@@ -22,20 +22,27 @@ import {
 import {
   barOptions,
   defaultOptions,
+  doughnutOptions,
   groupedBarOptions,
   highContrastOptions,
   horizontalBarOptions,
+  pieOptions,
   stackedBarOptions,
   stackedLineOptions,
 } from "./settings";
 import {
   BarDataSetHCStyle,
   BarDataSetStyle,
+  DoughnutDataSetHCStyle,
+  DoughnutDataSetStyle,
+  HorizontalBarDataSetHCStyle,
   HorizontalBarDataSetStyle,
   LineDataSetHCStyle,
   LineDataSetStyle,
   LineStackedDataSetHCStyle,
   LineStackedDataSetStyle,
+  PieDataSetHCStyle,
+  PieDataSetStyle,
 } from "./datasets";
 import { deepMerge } from "./utils";
 
@@ -112,6 +119,46 @@ export class BarChart extends ChartBuilder {
     this.plugins.push({
       afterDraw: highLightDataOnHover,
     });
+  }
+}
+
+export class PieChart extends ChartBuilder {
+  type: ChartTypes;
+
+  constructor(fields: IPreSetupConfig) {
+    super(fields);
+
+    this.type = ChartTypes.Pie;
+    this.data.datasets = Array.from(
+      this.data.datasets,
+      (set) => new PieDataSetStyle(set)
+    );
+
+    this.options = deepMerge(this.options, pieOptions);
+
+    if (fields.options) {
+      this.options = deepMerge(this.options, fields.options);
+    }
+  }
+}
+
+export class DoughnutChart extends PieChart {
+  type: ChartTypes;
+
+  constructor(fields: IPreSetupConfig) {
+    super(fields);
+
+    this.type = ChartTypes.Doughnut;
+    this.data.datasets = Array.from(
+      this.data.datasets,
+      (set) => new DoughnutDataSetStyle(set)
+    );
+
+    this.options = deepMerge(this.options, doughnutOptions);
+
+    if (fields.options) {
+      this.options = deepMerge(this.options, fields.options);
+    }
   }
 }
 
@@ -213,6 +260,36 @@ export class LineStackedChart extends ChartBuilder {
 /**
  * HighContrast Chart Options
  */
+
+export class HorizontalBarChartHighContrast extends ChartBuilder {
+  type: ChartTypes;
+
+  constructor(fields: IPreSetupConfigHighContrast) {
+    super(fields);
+
+    this.type = ChartTypes.HorizontalBar;
+    this.data.datasets = Array.from(
+      this.data.datasets,
+      (set) =>
+        new HorizontalBarDataSetHCStyle(set as HorizontalBarDataSetHCStyle)
+    );
+
+    this.plugins.push({
+      resize: horizontalBarAxisYLabels,
+    });
+    this.plugins.push({
+      afterDatasetsDraw: horizontalBarValue,
+    });
+
+    this.options = deepMerge(this.options, highContrastOptions);
+    this.options = deepMerge(this.options, horizontalBarOptions);
+
+    if (fields.options) {
+      this.options = deepMerge(this.options, fields.options);
+    }
+  }
+}
+
 export class StackedBarChartHighContrast extends ChartBuilder {
   type: ChartTypes;
 
@@ -259,6 +336,48 @@ export class LineStackedChartHighContrast extends ChartBuilder {
     this.plugins.push({
       afterDraw: highLightDataOnHover,
     });
+  }
+}
+
+export class PieChartHighContrast extends PieChart {
+  type: ChartTypes;
+
+  constructor(fields: IPreSetupConfigHighContrast) {
+    super(fields);
+
+    this.type = ChartTypes.Pie;
+    this.data.datasets = Array.from(
+      this.data.datasets,
+      (set) => new PieDataSetHCStyle(set as PieDataSetHCStyle)
+    );
+
+    this.options = deepMerge(this.options, highContrastOptions);
+    this.options = deepMerge(this.options, pieOptions);
+
+    if (fields.options) {
+      this.options = deepMerge(this.options, fields.options);
+    }
+  }
+}
+
+export class DoughnutChartHighContrast extends DoughnutChart {
+  type: ChartTypes;
+
+  constructor(fields: IPreSetupConfigHighContrast) {
+    super(fields);
+
+    this.type = ChartTypes.Pie;
+    this.data.datasets = Array.from(
+      this.data.datasets,
+      (set) => new DoughnutDataSetHCStyle(set as DoughnutDataSetHCStyle)
+    );
+
+    this.options = deepMerge(this.options, highContrastOptions);
+    this.options = deepMerge(this.options, doughnutOptions);
+
+    if (fields.options) {
+      this.options = deepMerge(this.options, fields.options);
+    }
   }
 }
 

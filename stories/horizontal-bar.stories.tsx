@@ -6,6 +6,7 @@ import {
   BarChart,
   BarChartHighContrast,
   HorizontalBarChart,
+  HorizontalBarChartHighContrast,
 } from "../src/lib/builder";
 import { Container, DarkContainer, HighContrastContainer } from "./components";
 import { customOptions } from "./utils";
@@ -17,7 +18,7 @@ export default {
 
 const datasets = [
   {
-    label: "Tablets",
+    label: "Sales",
     data: [860, 6700, 3100, 2012, 1930],
     color: "#6264A7",
   },
@@ -40,15 +41,15 @@ export const Default = () => {
 
 const datasetsHighContrast = [
   {
-    label: "Tablets",
+    label: "Sales",
     data: [860, 6700, 3100, 2012, 1930],
-    pattern: Patterns.Square,
+    pattern: Patterns.Diagonal,
   },
 ];
 
 export const HighContrast = () => {
-  const config: IChart = new BarChartHighContrast({
-    areaLabel: "Bar chart sample",
+  const config: IChart = new HorizontalBarChartHighContrast({
+    areaLabel: "Horizontal bar chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets: datasetsHighContrast,
@@ -63,24 +64,23 @@ export const HighContrast = () => {
 
 const datasetsCustomTheme = [
   {
-    label: "Tablets",
+    label: "Sales",
     data: [860, 6700, 3100, 2012, 1930],
     color: "rgb(255, 99, 132)",
   },
 ];
 
 export const CustomTheme = () => {
-  const config: IChart = new BarChart({
-    areaLabel: "Bar chart sample",
+  const config: IChart = new HorizontalBarChart({
+    areaLabel: "Horizontal bar chart sample",
     data: {
       labels: ["Jan", "Feb", "March", "April", "May"],
       datasets: datasetsCustomTheme,
     },
-    options: customOptions,
   });
   return (
-    <DarkContainer>
+    <Container>
       <Chart {...config} />
-    </DarkContainer>
+    </Container>
   );
 };

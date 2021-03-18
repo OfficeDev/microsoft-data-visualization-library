@@ -25,6 +25,11 @@ const datasets = [
     data: [1200, 3600, 2480, 5049, 4596],
     color: "#BDBDE6",
   },
+  {
+    label: "Phones",
+    data: [1000, 1600, 1800, 3049, 3596],
+    color: "#464775",
+  },
 ];
 
 export const Default = () => {
@@ -46,12 +51,12 @@ const datasetsHighContrast = [
   {
     label: "Tablets",
     data: [860, 6700, 3100, 2012, 1930],
-    pattern: Patterns.Square,
+    pattern: Patterns.Diagonal,
   },
   {
     label: "Phones",
-    data: [100, 1600, 180, 3049, 3596],
-    pattern: Patterns.Diagonal,
+    data: [1000, 1600, 1800, 3049, 3596],
+    pattern: Patterns.Square,
   },
   {
     label: "Laptops",
@@ -85,6 +90,11 @@ const datasetsCustomTheme = [
     label: "Watches",
     data: [1200, 3600, 2480, 5049, 4596],
     color: "rgb(255, 159, 64)",
+  },
+  {
+    label: "Phones",
+    data: [1000, 1600, 1800, 3049, 3596],
+    color: "rgb(255, 205, 86)",
   },
 ];
 
