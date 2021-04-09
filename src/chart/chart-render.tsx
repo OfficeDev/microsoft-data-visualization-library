@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Chart from "chart.js";
+import { ChartLegend } from "./chart-legend";
 import { IChart } from "../types";
 
 export const ChartRender = (config: IChart) => {
@@ -20,27 +21,51 @@ export const ChartRender = (config: IChart) => {
     chartRef.current = new Chart(ctx, { ...config });
   }, []);
 
+  function onLegendItemClick(index: number) {
+    if (!chartRef.current) return;
+    const ci = (chartRef.current as any).chart;
+    const meta = ci.getDatasetMeta(index);
+
+    // See controller.isDatasetVisible comment
+    meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+
+    // We hid a dataset ... rerender the chart
+    ci.update();
+  }
+
   return (
-    <canvas
-      id={chartId}
-      ref={canvasRef}
-      tabIndex={0}
+    <div
       style={{
-        userSelect: "none",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        flexGrow: 1,
       }}
-      aria-label={config.areaLabel}
     >
-      {data!.datasets!.map((set, setKey) =>
-        (set.data! as number[]).forEach((item: number, itemKey: number) => (
-          // Generated tooltips for screen readers
-          <div key={itemKey} id={`${chartId}-tooltip-${setKey}-${itemKey}`}>
-            <p>{item}</p>
-            <span>
-              {set.label}: {set!.data![itemKey]}
-            </span>
-          </div>
-        ))
-      )}
-    </canvas>
+      <div style={{ flexGrow: 1 }}>
+        <canvas
+          id={chartId}
+          ref={canvasRef}
+          tabIndex={0}
+          style={{
+            userSelect: "none",
+          }}
+          aria-label={config.areaLabel}
+        >
+          {data!.datasets!.map((set, setKey) =>
+            (set.data! as number[]).forEach((item: number, itemKey: number) => (
+              // Generated tooltips for screen readers
+              <div key={itemKey} id={`${chartId}-tooltip-${setKey}-${itemKey}`}>
+                <p>{item}</p>
+                <span>
+                  {set.label}: {set!.data![itemKey]}
+                </span>
+              </div>
+            ))
+          )}
+        </canvas>
+      </div>
+      {data && <ChartLegend config={config} onClick={onLegendItemClick} />}
+    </div>
   );
 };

@@ -6,65 +6,26 @@ import {
   PositionType,
   Scriptable,
 } from "chart.js";
-import { Entity, HighContrastColors, IDraw, Point, Shapes } from "../types";
+import {
+  ChartTypes,
+  Entity,
+  HighContrastColors,
+  IDraw,
+  Point,
+  Shapes,
+} from "../types";
 import { buildPattern } from "./patterns";
 
-// export class ChartDataSet extends Entity implements ChartDataSets {
-//   backgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-//   barPercentage?: number;
-//   barThickness?: number | "flex";
-//   borderAlign?: BorderAlignment | BorderAlignment[] | Scriptable<BorderAlignment>;
-//   borderCapStyle?: 'butt' | 'round' | 'square';
-//   borderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-//   borderDash?: number[];
-//   borderDashOffset?: number;
-//   borderJoinStyle?: 'bevel' | 'round' | 'miter';
-//   borderSkipped?: PositionType | PositionType[] | Scriptable<PositionType>;
-//   borderWidth?: BorderWidth | BorderWidth[] | Scriptable<BorderWidth>;
-//   categoryPercentage?: number;
-//   cubicInterpolationMode?: 'default' | 'monotone';
-//   data?: Array<number | null | undefined | number[]> | ChartPoint[];
-//   fill?: boolean | number | string;
-//   hidden?: boolean;
-//   hideInLegendAndTooltip?: boolean;
-//   hitRadius?: number | number[] | Scriptable<number>;
-//   hoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-//   hoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-//   hoverBorderWidth?: number | number[] | Scriptable<number>;
-//   hoverRadius?: number;
-//   label?: string;
-//   lineTension?: number;
-//   maxBarThickness?: number;
-//   minBarLength?: number;
-//   order?: number;
-//   pointBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-//   pointBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-//   pointBorderWidth?: number | number[] | Scriptable<number>;
-//   pointHitRadius?: number | number[] | Scriptable<number>;
-//   pointHoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-//   pointHoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
-//   pointHoverBorderWidth?: number | number[] | Scriptable<number>;
-//   pointHoverRadius?: number | number[] | Scriptable<number>;
-//   pointRadius?: number | number[] | Scriptable<number>;
-//   pointRotation?: number | number[] | Scriptable<number>;
-//   pointStyle?: PointStyle | HTMLImageElement | HTMLCanvasElement | Array<PointStyle | HTMLImageElement | HTMLCanvasElement> | Scriptable<PointStyle | HTMLImageElement | HTMLCanvasElement>;
-//   radius?: number | number[] | Scriptable<number>;
-//   rotation?: number | number[] | Scriptable<number>;
-//   showLine?: boolean;
-//   spanGaps?: boolean;
-//   stack?: string;
-//   steppedLine?: 'before' | 'after' | 'middle' | boolean;
-//   type?: ChartType | string;
-//   weight?: number;
-//   xAxisID?: string;
-//   yAxisID?: string;
+export class ChartDataSet extends Entity {
+  type?: string | undefined;
 
-//   constructor(fields: Partial<ChartDataSets>) {
-//     super(fields)
-//   }
-// }
+  constructor(fields: Partial<ChartDataSet>) {
+    super(fields);
 
-export class LineDataSetStyle extends Entity implements ChartDataSets {
+    this.type = fields.type;
+  }
+}
+export class LineDataSetStyle extends ChartDataSet implements ChartDataSets {
   borderCapStyle?: "butt" | "round" | "square";
   borderJoinStyle?: "bevel" | "round" | "miter";
   borderWidth?: BorderWidth | BorderWidth[] | Scriptable<BorderWidth>;
@@ -94,6 +55,8 @@ export class LineDataSetStyle extends Entity implements ChartDataSets {
 
   constructor(fields: Partial<LineDataSetStyle>) {
     super(fields);
+
+    this.type = ChartTypes.Line;
     this.backgroundColor = fields.backgroundColor || "transparent";
     this.borderCapStyle = fields.borderCapStyle || "round";
     this.borderJoinStyle = fields.borderJoinStyle || "round";
@@ -198,7 +161,7 @@ export class LineStackedDataSetHCStyle extends LineStackedDataSetStyle {
   }
 }
 
-export class BarDataSetStyle extends Entity implements ChartDataSets {
+export class BarDataSetStyle extends ChartDataSet implements ChartDataSets {
   backgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   borderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   borderWidth?: BorderWidth | BorderWidth[] | Scriptable<BorderWidth>;
@@ -216,10 +179,11 @@ export class BarDataSetStyle extends Entity implements ChartDataSets {
     this.hoverBackgroundColor =
       fields.hoverBackgroundColor || fields.color || "rgba(0,0,0,.1)";
     this.borderSkipped = fields.borderSkipped || (false as any);
+    this.type = ChartTypes.Bar as string;
   }
 }
 
-export class PieDataSetStyle extends Entity implements ChartDataSets {
+export class PieDataSetStyle extends ChartDataSet implements ChartDataSets {
   backgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   borderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   borderWidth?: BorderWidth | BorderWidth[] | Scriptable<BorderWidth>;
@@ -230,6 +194,7 @@ export class PieDataSetStyle extends Entity implements ChartDataSets {
 
   constructor(fields: PieDataSetStyle) {
     super(fields);
+    this.type = ChartTypes.Pie;
     this.borderWidth = fields.borderWidth || 2;
     this.borderColor = fields.borderColor || "#fff";
     this.hoverBorderColor = fields.hoverBorderColor || "#fff";
@@ -244,10 +209,14 @@ export class PieDataSetStyle extends Entity implements ChartDataSets {
 export class DoughnutDataSetStyle extends PieDataSetStyle {
   constructor(fields: DoughnutDataSetStyle) {
     super(fields);
+
+    this.type = ChartTypes.Doughnut;
   }
 }
 
-export class HorizontalBarDataSetStyle extends Entity implements ChartDataSets {
+export class HorizontalBarDataSetStyle
+  extends ChartDataSet
+  implements ChartDataSets {
   backgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
   barPercentage?: number;
   borderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
@@ -259,6 +228,7 @@ export class HorizontalBarDataSetStyle extends Entity implements ChartDataSets {
 
   constructor(fields: HorizontalBarDataSetStyle) {
     super(fields);
+    this.type = ChartTypes.HorizontalBar;
     this.borderWidth = fields.borderWidth || 0;
     this.barPercentage = fields.barPercentage || 0.5;
     this.backgroundColor =

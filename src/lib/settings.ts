@@ -25,6 +25,15 @@ export const defaultOptions: IChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   defaultColor: "#C8C6C4",
+  // legend: {
+  //   display: false,
+  //   position: "bottom",
+  //   align: "start",
+  //   labels: {
+  //     boxWidth: 12,
+  //     // generateLabels: (a) => { console.log({ a }); return [] }
+  //   }
+  // },
   animation: {
     duration: 1000,
   },

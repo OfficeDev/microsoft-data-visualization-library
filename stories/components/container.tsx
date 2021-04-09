@@ -18,9 +18,11 @@ export const Container = (props) => (
   >
     <div
       style={{
+        display: "flex",
+        flexDirection: "column",
         width: "100%",
         maxWidth: "960px",
-        height: "400px",
+        minHeight: "400px",
         background: "white",
         borderRadius: "4px",
         padding: "24px",
@@ -49,13 +51,16 @@ export const DarkContainer = (props) => (
       width: "100%",
       height: "100%",
       background: "#1B1A1A",
+      color: "#fff",
     }}
   >
     <div
       style={{
+        display: "flex",
+        flexDirection: "column",
         width: "100%",
         maxWidth: "960px",
-        height: "400px",
+        minHeight: "400px",
         background: "#2D2C2C",
         borderRadius: "4px",
         padding: "24px",
@@ -84,9 +89,11 @@ export const HighContrastContainer = (props) => (
     <style>
       {`
         .hc-container {
+          display: flex;
+          flex-direction: column;
           width: 100%;
           max-width: 960px;
-          height: 400px;
+          min-height: 400px;
           background: #000;
           border-radius: 4px;
           padding: 24px;
