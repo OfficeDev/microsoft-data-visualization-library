@@ -1,7 +1,8 @@
 {
   "type": "prerelease",
-  "comment": "ignore lib changes",
+  "comment": "Verify package publishing flow",
   "packageName": "@fluentui/react-charts",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
+  "email": "nirsh@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2021-04-14T21:48:34.796Z"
 }
