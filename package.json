@@ -1,6 +1,6 @@
 {
   "name": "@fluentui/react-charts",
-  "version": "0.1.0-alpha.3",
+  "version": "1.0.0",
   "description": "Charts in the Fluent UI design language written in React",
   "repository": "https://github.com/OfficeDev/microsoft-data-visualization-library.git",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "build": "just-scripts build",
     "build:storybook": "just-scripts build:storybook",
     "change": "beachball change --branch origin/main",
-    "check": "beachball check --branch origin/main",
+    "checkchange": "beachball check --branch origin/main",
     "prepare": "node ./scripts/prepare",
     "lint": "just-scripts lint",
     "release": "beachball publish --branch origin/main",
