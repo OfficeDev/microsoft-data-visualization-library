@@ -1,0 +1,20 @@
+{
+  "name": "@fluentui/react-charts",
+  "entries": [
+    {
+      "date": "Wed, 14 Apr 2021 22:25:50 GMT",
+      "tag": "@fluentui/react-charts_v0.1.0-alpha.3",
+      "version": "0.1.0-alpha.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Verify package publishing flow",
+            "author": "nirsh@microsoft.com",
+            "commit": "2a4abd15ef2a0fbf74bf64787be2fcc75f033cd8",
+            "package": "@fluentui/react-charts"
+          }
+        ]
+      }
+    }
+  ]
+}
