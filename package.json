@@ -9,7 +9,7 @@
     "build": "just-scripts build",
     "build:storybook": "just-scripts build:storybook",
     "change": "beachball change --branch origin/main",
-    "check": "beachball check --branch origin/main",
+    "checkchange": "beachball check --branch origin/main",
     "prepare": "node ./scripts/prepare",
     "lint": "just-scripts lint",
     "release": "beachball publish --branch origin/main",
