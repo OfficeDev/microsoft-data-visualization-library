@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "ignore lib changes",
+  "packageName": "@fluentui/react-charts",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
