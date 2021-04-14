@@ -1,6 +1,6 @@
 {
   "name": "@fluentui/react-charts",
-  "version": "0.1.0-alpha.3",
+  "version": "1.0.0",
   "description": "Charts in the Fluent UI design language written in React",
   "repository": "https://github.com/OfficeDev/microsoft-data-visualization-library.git",
   "license": "MIT",
