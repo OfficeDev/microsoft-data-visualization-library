@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Publish 1.0.0 version of react-charts",
-  "packageName": "@fluentui/react-charts",
-  "email": "nirsh@microsoft.com",
-  "dependentChangeType": "patch"
-}
