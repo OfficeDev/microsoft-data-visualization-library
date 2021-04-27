@@ -1,8 +1,16 @@
 # Change Log - @fluentui/react-charts
 
-This log was last generated on Wed, 14 Apr 2021 23:04:35 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Apr 2021 01:22:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.0
+
+Tue, 27 Apr 2021 01:22:02 GMT
+
+### Minor changes
+
+- Merge branch 'main' of github.com:OfficeDev/microsoft-data-visualization-library into legend (olkatruk@microsoft.com)
 
 ## 1.0.1
 
