@@ -1,8 +1,8 @@
 {
-  "name": "@fluentui/react-teams",
-  "version": "2.0.0",
-  "description": "Teams components in the Fluent UI design language written in React",
-  "repository": "https://github.com/OfficeDev/microsoft-teams-ui-component-library.git",
+  "name": "@fluentui/react-charts",
+  "version": "1.0.1",
+  "description": "Charts in the Fluent UI design language written in React",
+  "repository": "https://github.com/OfficeDev/microsoft-data-visualization-library.git",
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
