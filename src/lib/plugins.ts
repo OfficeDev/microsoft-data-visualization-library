@@ -219,7 +219,7 @@ export const highLightDataOnHover = (chartInstance: any) => {
               break;
           }
           ctx.lineWidth = 2;
-          ctx.fillStyle = "#fff";
+          ctx.fillStyle = HighContrastColors.Foreground;
           ctx.strokeStyle =
             chart.data.datasets[activePoint._datasetIndex].hoverBorderColor;
           ctx.closePath();
@@ -455,7 +455,7 @@ export const tooltipAxisXLine = ({ chart, ctx, tooltip }: any) => {
 };
 
 export const horizontalBarValue = ({ chart, ctx, config }: any) => {
-  ctx.font = "bold 11px Segoe UI";
+  ctx.font = "bold 11px Segoe UI, system-ui, sans-serif";
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
   ctx.fillStyle = config.options.scales.xAxes[0].ticks.fontColor;

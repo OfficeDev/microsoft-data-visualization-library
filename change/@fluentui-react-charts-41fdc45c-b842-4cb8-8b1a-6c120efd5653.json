@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Merge branch 'main' of github.com:OfficeDev/microsoft-data-visualization-library into legend",
+  "packageName": "@fluentui/react-charts",
+  "email": "olkatruk@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -2,7 +2,7 @@ import { create } from "@storybook/theming/create";
 
 export default create({
   base: "light",
-  brandTitle: "@fluentui/charts",
+  brandTitle: "@fluentui/react-charts",
 
   colorPrimary: "#6264A7",
   colorSecondary: "#616161",
