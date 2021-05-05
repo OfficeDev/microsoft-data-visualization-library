@@ -1,4 +1,4 @@
-import {
+import Chart, {
   ChartDataSets,
   PluginServiceRegistrationOptions,
   PointStyle,
@@ -16,10 +16,16 @@ export class Entity {
 export interface IChart extends Chart.ChartConfiguration {
   areaLabel: string;
   type?: ChartTypes;
+  canvasProps?: React.HTMLProps<HTMLCanvasElement>;
+}
+
+export interface IChartLegend extends Chart.ChartLegendOptions {
+  custom: boolean;
 }
 
 export interface IChartOptions extends Chart.ChartOptions {
   highContrastMode?: boolean;
+  legend?: IChartLegend;
 }
 
 export interface IBubbleChartData {
@@ -32,6 +38,7 @@ export interface IChartDataSet {
   label: string;
   data: number[] | IBubbleChartData[];
   hidden?: boolean;
+  color?: string;
 }
 
 export enum ChartTypes {

@@ -1,6 +1,7 @@
 import { ChartDataSets } from "chart.js";
 import { HighContrastColors, IChartOptions } from "../types";
 import { usNumberFormat, shortTicks } from "./utils";
+import "chartjs-plugin-deferred";
 
 const stackedTooltipTitle = (
   item: Chart.ChartTooltipItem[],
@@ -25,15 +26,10 @@ export const defaultOptions: IChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   defaultColor: "#C8C6C4",
-  // legend: {
-  //   display: false,
-  //   position: "bottom",
-  //   align: "start",
-  //   labels: {
-  //     boxWidth: 12,
-  //     // generateLabels: (a) => { console.log({ a }); return [] }
-  //   }
-  // },
+  legend: {
+    display: false,
+    custom: true,
+  },
   animation: {
     duration: 1000,
   },
@@ -127,30 +123,12 @@ export const defaultOptions: IChartOptions = {
       },
     ],
   },
+  plugins: {
+    deferred: {
+      delay: 150, // delay of 500 ms after the canvas is considered inside the viewport
+    },
+  },
 };
-
-// let dataPointConfig = {
-//   label: set.label,
-//   data: set.data,
-//   borderWidth: 1,
-//   borderColor: colorScheme.default.background,
-//   hoverBorderColor: chartDataPointColors[i],
-//   backgroundColor: chartDataPointColors[i],
-//   hoverBorderWidth: 2,
-//   hoverBackgroundColor: chartDataPointColors[i],
-//   pointBorderColor: colorScheme.default.background,
-//   pointBackgroundColor: colorScheme.default.foreground3,
-//   pointHoverBackgroundColor: colorScheme.default.foreground3,
-//   pointHoverBorderColor: chartDataPointColors[i],
-//   pointHoverBorderWidth: 2,
-//   borderCapStyle: "round",
-//   borderJoinStyle: "round",
-//   pointBorderWidth: 0,
-//   pointRadius: 0,
-//   pointHoverRadius: 3,
-//   pointStyle: "circle",
-//   borderDash: [],
-// }
 
 export const highContrastOptions: IChartOptions = {
   highContrastMode: true,
@@ -191,7 +169,7 @@ export const highContrastOptions: IChartOptions = {
   },
 };
 
-export const stackedLineOptions: Chart.ChartOptions = {
+export const stackedLineOptions: IChartOptions = {
   scales: {
     yAxes: [
       {
@@ -214,7 +192,55 @@ export const stackedLineOptions: Chart.ChartOptions = {
   },
 };
 
-export const barOptions: Chart.ChartOptions = {
+export const trendLineOptions: IChartOptions = {
+  hover: {
+    mode: "nearest",
+    intersect: false,
+  },
+  legend: {
+    display: false,
+    custom: false,
+  },
+  layout: {
+    padding: {
+      left: -40,
+      right: 0,
+      top: 0,
+      bottom: 0,
+    },
+  },
+  scales: {
+    xAxes: [
+      {
+        ticks: {
+          display: false,
+        },
+        gridLines: {
+          display: false,
+        },
+      },
+    ],
+    yAxes: [
+      {
+        ticks: {
+          display: false,
+        },
+        gridLines: {
+          display: false,
+        },
+      },
+    ],
+  },
+  plugins: {
+    deferred: {
+      xOffset: 150, // defer until 150px of the canvas width are inside the viewport
+      yOffset: "100%", // defer until 50% of the canvas height are inside the viewport
+      delay: 150, // delay of 500 ms after the canvas is considered inside the viewport
+    },
+  },
+};
+
+export const barOptions: IChartOptions = {
   hover: {
     mode: "nearest",
     intersect: false,
@@ -230,7 +256,7 @@ export const barOptions: Chart.ChartOptions = {
   },
 };
 
-export const pieOptions: Chart.ChartOptions = {
+export const pieOptions: IChartOptions = {
   layout: {
     padding: {
       top: 32,
@@ -281,12 +307,12 @@ export const pieOptions: Chart.ChartOptions = {
   },
 };
 
-export const doughnutOptions: Chart.ChartOptions = {
+export const doughnutOptions: IChartOptions = {
   cutoutPercentage: 70,
   ...pieOptions,
 };
 
-export const groupedBarOptions: Chart.ChartOptions = {
+export const groupedBarOptions: IChartOptions = {
   scales: {
     xAxes: [
       {
@@ -298,7 +324,7 @@ export const groupedBarOptions: Chart.ChartOptions = {
   },
 };
 
-export const stackedBarOptions: Chart.ChartOptions = {
+export const stackedBarOptions: IChartOptions = {
   hover: {
     mode: "nearest",
     intersect: false,
@@ -321,7 +347,7 @@ export const stackedBarOptions: Chart.ChartOptions = {
   },
 };
 
-export const horizontalBarOptions: Chart.ChartOptions = {
+export const horizontalBarOptions: IChartOptions = {
   layout: {
     padding: {
       top: -6,

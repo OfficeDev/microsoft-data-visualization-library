@@ -6193,6 +6193,11 @@ chartjs-color@^2.1.0:
     chartjs-color-string "^0.6.0"
     color-convert "^1.9.3"
 
+chartjs-plugin-deferred@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/chartjs-plugin-deferred/-/chartjs-plugin-deferred-1.0.2.tgz#c1a373a8e2fe8e99e674ec0d69d8ae6c1a78bb5f"
+  integrity sha512-ZQsTMtfHRRiQMZ3AuAOuMltMHDLb0Qo6JlT2ncEz28BMtQmq9K+D1ACrI1yNOHMYSCJgDTCOIQorgKauOQIVmA==
+
 chokidar@^2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.8.tgz#804b3a7b6a99358c3c5c61e71d8728f041cff917"

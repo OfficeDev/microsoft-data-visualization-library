@@ -82,6 +82,65 @@ export class LineDataSetStyle extends ChartDataSet implements ChartDataSets {
   }
 }
 
+export class TrendLineDataSetStyle
+  extends ChartDataSet
+  implements ChartDataSets {
+  borderCapStyle?: "butt" | "round" | "square";
+  borderJoinStyle?: "bevel" | "round" | "miter";
+  borderWidth?: BorderWidth | BorderWidth[] | Scriptable<BorderWidth>;
+  hoverBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  hoverBorderWidth?: number | number[] | Scriptable<number>;
+  pointBorderWidth?: number | number[] | Scriptable<number>;
+  pointHoverBorderWidth?: number | number[] | Scriptable<number>;
+  pointHoverRadius?: number | number[] | Scriptable<number>;
+  pointRadius?: number | number[] | Scriptable<number>;
+  pointStyle?:
+    | PointStyle
+    | HTMLImageElement
+    | HTMLCanvasElement
+    | Array<PointStyle | HTMLImageElement | HTMLCanvasElement>
+    | Scriptable<PointStyle | HTMLImageElement | HTMLCanvasElement>;
+  backgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  color?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  borderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  hoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  pointBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  pointBackgroundColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+  pointHoverBackgroundColor?:
+    | ChartColor
+    | ChartColor[]
+    | Scriptable<ChartColor>;
+  pointHoverBorderColor?: ChartColor | ChartColor[] | Scriptable<ChartColor>;
+
+  constructor(fields: Partial<LineDataSetStyle>) {
+    super(fields);
+
+    this.type = ChartTypes.Line;
+    this.backgroundColor = fields.backgroundColor || "transparent";
+    this.borderCapStyle = fields.borderCapStyle || "round";
+    this.borderJoinStyle = fields.borderJoinStyle || "round";
+    this.borderWidth = fields.borderWidth || 2;
+    this.hoverBackgroundColor = fields.hoverBackgroundColor || "transparent";
+    this.hoverBorderWidth = fields.hoverBorderWidth || 2.5;
+    this.pointBorderWidth = fields.hoverBorderWidth || 0;
+    this.pointHoverBorderWidth = fields.pointHoverBorderWidth || 0;
+    this.pointHoverRadius = fields.pointHoverRadius || 0;
+    this.pointRadius = fields.pointRadius || 0;
+    this.pointStyle = fields.pointStyle || "circle";
+    this.borderColor = fields.borderColor || fields.color || "rgba(0,0,0,.1)";
+    this.hoverBorderColor =
+      fields.hoverBorderColor || fields.color || "rgba(0,0,0,.1)";
+    this.pointBorderColor =
+      fields.pointBorderColor || fields.color || "rgba(0,0,0,.1)";
+    this.pointBackgroundColor =
+      fields.pointBackgroundColor || fields.color || "rgba(0,0,0,.1)";
+    this.pointHoverBackgroundColor =
+      fields.pointHoverBackgroundColor || fields.color || "rgba(0,0,0,.1)";
+    this.pointHoverBorderColor =
+      fields.pointHoverBorderColor || fields.color || "rgba(0,0,0,.1)";
+  }
+}
+
 export class LineDataSetHCStyle extends LineDataSetStyle {
   borderColor?: string;
   hoverBorderColor?: string;
@@ -113,6 +172,16 @@ export class LineDataSetHCStyle extends LineDataSetStyle {
     this.pointHoverRadius = 4;
     this.borderDash = fields.borderDash || [];
     this.pointStyle = fields.pointStyle || Point.Circle;
+  }
+}
+
+export class TrendLineDataSetHCStyle extends LineDataSetHCStyle {
+  constructor(fields: TrendLineDataSetHCStyle) {
+    super(fields);
+    this.pointBorderWidth = fields.hoverBorderWidth || 0;
+    this.pointHoverBorderWidth = fields.pointHoverBorderWidth || 0;
+    this.pointHoverRadius = fields.pointHoverRadius || 0;
+    this.pointRadius = fields.pointRadius || 0;
   }
 }
 

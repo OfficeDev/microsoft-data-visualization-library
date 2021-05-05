@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "chart.js": "^2.9.4",
+    "chartjs-plugin-deferred": "^1.0.2",
     "react-perfect-scrollbar": "^1.5.8"
   },
   "peerDependencies": {

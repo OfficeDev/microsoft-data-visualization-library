@@ -4,7 +4,7 @@ import { ChartLegend } from "./chart-legend";
 import { IChart } from "../types";
 
 export const ChartRender = (config: IChart) => {
-  const { data } = config;
+  const { data, options, canvasProps } = config;
 
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const chartRef = React.useRef<Chart | undefined>();
@@ -51,6 +51,7 @@ export const ChartRender = (config: IChart) => {
             userSelect: "none",
           }}
           aria-label={config.areaLabel}
+          {...canvasProps}
         >
           {data!.datasets!.map((set, setKey) =>
             (set.data! as number[]).forEach((item: number, itemKey: number) => (
@@ -65,7 +66,9 @@ export const ChartRender = (config: IChart) => {
           )}
         </canvas>
       </div>
-      {data && <ChartLegend config={config} onClick={onLegendItemClick} />}
+      {data && (options as any).legend.custom && (
+        <ChartLegend config={config} onClick={onLegendItemClick} />
+      )}
     </div>
   );
 };
