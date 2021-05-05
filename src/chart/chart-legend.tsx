@@ -57,7 +57,6 @@ const LegendItem = ({
 
   React.useEffect(() => {
     if (!legendItemRef.current) return;
-    console.log(elementInViewport(legendItemRef.current));
   }, []);
 
   const style: any = {

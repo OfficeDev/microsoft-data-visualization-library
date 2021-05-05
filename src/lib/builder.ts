@@ -29,6 +29,7 @@ import {
   pieOptions,
   stackedBarOptions,
   stackedLineOptions,
+  trendLineOptions,
 } from "./settings";
 import {
   BarDataSetHCStyle,
@@ -43,6 +44,8 @@ import {
   LineStackedDataSetStyle,
   PieDataSetHCStyle,
   PieDataSetStyle,
+  TrendLineDataSetHCStyle,
+  TrendLineDataSetStyle,
 } from "./datasets";
 import { deepMerge } from "./utils";
 
@@ -91,6 +94,54 @@ export class LineChart extends ChartBuilder {
       this.data.datasets,
       (set) => new LineDataSetStyle(set)
     );
+
+    this.plugins.push({
+      beforeDatasetsDraw: highLightDataOnHover,
+    });
+  }
+}
+
+export class TrendLineChart extends ChartBuilder {
+  type: ChartTypes;
+
+  constructor(fields: IPreSetupConfig) {
+    super(fields);
+
+    this.type = ChartTypes.Line;
+    this.data.datasets = Array.from(
+      this.data.datasets,
+      (set) => new TrendLineDataSetStyle(set)
+    );
+
+    this.options = deepMerge(this.options, trendLineOptions);
+
+    if (fields.options) {
+      this.options = deepMerge(this.options, fields.options);
+    }
+
+    this.plugins.push({
+      afterLayout: gradientPlugin,
+    });
+    this.plugins.push({
+      beforeDatasetDraw: highLightDataOnHover,
+    });
+  }
+}
+
+export class TrendLineChartHighContrast extends TrendLineChart {
+  constructor(fields: ILinePreSetupConfigHighContrast) {
+    super(fields);
+
+    this.data.datasets = Array.from(
+      fields.data.datasets,
+      (set: TrendLineDataSetHCStyle) => new TrendLineDataSetHCStyle(set)
+    );
+
+    this.options = deepMerge(this.options, highContrastOptions);
+
+    this.plugins.push({
+      afterLayout: gradientPlugin,
+    });
 
     this.plugins.push({
       beforeDatasetsDraw: highLightDataOnHover,
