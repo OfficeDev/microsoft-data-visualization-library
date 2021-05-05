@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Trend Chart",
-  "packageName": "@fluentui/react-charts",
-  "email": "olkatruk@microsoft.com",
-  "dependentChangeType": "patch"
-}

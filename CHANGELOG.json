@@ -2,6 +2,21 @@
   "name": "@fluentui/react-charts",
   "entries": [
     {
+      "date": "Wed, 05 May 2021 23:09:27 GMT",
+      "tag": "@fluentui/react-charts_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Trend Chart",
+            "author": "olkatruk@microsoft.com",
+            "commit": "43b5a032b5b07bd059415800dcd6e6a4c25e822f",
+            "package": "@fluentui/react-charts"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Apr 2021 01:22:02 GMT",
       "tag": "@fluentui/react-charts_v1.1.0",
       "version": "1.1.0",
